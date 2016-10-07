@@ -1,1 +1,0 @@
-<script src="<?php echo base_url(); ?>libs/moderna/js/bootstrap.min.js"></script>
