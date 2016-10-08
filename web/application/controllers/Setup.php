@@ -8,7 +8,7 @@ class Setup extends MY_Controller{
 	}
 	
 	public function index(){
-        return $this->load->view($this->layout, ['top_navbar'=>'fragments/top_navbar/global_top_navbar', 'head_css'=>'fragments/head_css/setup', 'content'=>'fragments/content/setup', 'footer_js'=>'fragments/footer_js/setup', 'active_nav'=>'company-setup', 'user' => $this->session->userdata('user')]);
+        return $this->load->view('fragments/content/account_setup', ['user' => $this->session->userdata('user')]);
 	}
 
     public function add_tin_no(){
