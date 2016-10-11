@@ -278,11 +278,11 @@ button.seq-prev{
   overflow: auto;
 }
 #sequence1 li > div.content{
-  width: 99%; 
+  width: 97%; 
   margin: 0;
 }
 #sequence1 ul li:nth-child(2) > div.content, #sequence1 ul li:nth-last-child(3) > div.content{
-  width: 98%; 
+  width: 96%; 
   margin: 0; 
   padding-bottom: 15px;
 }
@@ -310,4 +310,7 @@ button.seq-prev{
 .table-input input:disabled, .table-input select:disabled{
   background-color: #F1F1F1;
   color: #828282;
+}
+.seq-canvas > li .content{
+  width: 96%;
 }

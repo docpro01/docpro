@@ -26,6 +26,27 @@ class Setup_Model extends CI_Model{
 
 // NEW FUNCTIONS
 
+    public static function get_profile($cb_id){
+        return self::$db->get_where('company_branches', ['cb_id' => $cb_id])->result();
+    }
+
+    public static function edit_profile($data, $user){
+        self::$db->where('cb_id', $user->main_company->cb_id)->update('company_branches', $data);
+        $ch_data = [
+                    'ch_cb_name' => $data['cb_name'],
+                    'ch_cb_ind_name' => $data['cb_ind_name'],
+                    'ch_name' => $data['name'],
+                    'ch_cb_address' => $data['cb_address'],
+                    'ch_cb_tin' => $data['cb_tin'],
+                    'ch_cb_class' => $data['cb_class'],
+                    'ch_cb_bp_type' => $data['cb_bp_type'],
+                    'ch_cb_tax_type' => $data['cb_tax_type'],
+                    'ch_cb_cno' => $data['cb_cno'],
+                    'ch_cb_email' => $data['cb_email'],
+                ];
+        self::$db->where('ch_id', $user->ch_id)->update('company_history', $ch_data);
+    }
+
     public static function add_tin_no($cb_id, $tin_no){
         self::$db->where('cb_id', $cb_id)->update('company_branches', ['cb_tin' => $tin_no]);
         self::$db->where('ch_cb_id', $cb_id)->update('company_history', ['ch_cb_tin' => $tin_no]);
@@ -107,8 +128,28 @@ class Setup_Model extends CI_Model{
         return self::$db->get_where('company_branches', ['cb_id' => $cb_id])->result();
     }
 
-    public static function get_employees($cb_id, $p_id){
-        return self::$db->where('p.cb_id', $cb_id)->where('p.p_id !=', $p_id)->get('profiles p')->result();
+    public static function get_users($cb_id, $p_id){
+        $data = self::$db->from('profiles p')->join('users u', 'u.p_id=p.p_id')->where('p.cb_id', $cb_id)->where('p.p_id !=', $p_id)->get()->result();
+        foreach ($data as $key => &$value) {
+           $branch = self::$db->from('users u')->join('cb_br cbbr', 'cbbr.cbbr_id=u.cbbr_id')->join('company_branches cb', 'cb.cb_id=cbbr.br_id')->get()->result();
+           $value->b_name = $branch[0]->name;
+           $value->b_id= $branch[0]->br_id;
+        }
+        return $data;
+    }
+
+    public static function get_branch_list($cb_id){
+        return self::$db->from('cb_br cbbr')->join('company_branches cb', 'cb.cb_id=cbbr.br_id')->where('cbbr.cb_id', $cb_id)->get()->result();
+    }
+
+    public static function add_user($profile, $user){
+        self::$db->insert('profiles', $profile);
+        $p_id = self::$db->insert_id();
+        $last_record = self::$db->query("SELECT * FROM users WHERE cbbr_id='".$user['cbbr_id']."' ORDER BY CAST(u_seq AS DECIMAL) DESC LIMIT 1")->result();
+        $seq = count($last_record) > 0 ? (floatval($last_record[0]->u_seq) + 1).'' : '0';
+        $user['p_id'] = $p_id;
+        $user['u_seq'] = $seq;
+        self::$db->insert('users', $user);
     }
 
     public static function get_branches($cb_id){
@@ -189,7 +230,8 @@ class Setup_Model extends CI_Model{
     }
 
     public static function get_coa_lvl6($cb_id){
-        return self::$db->from('coa_lvl_6 coa6')->join('coalvl_5_6 coa56', 'coa6.lvl_6_id=coa56.lvl_6_id')->join('coa_lvl_5 coa5', 'coa5.lvl_5_id=coa56.lvl_5_id')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+        // return self::$db->from('coa_lvl_6 coa6')->join('coalvl_5_6 coa56', 'coa6.lvl_6_id=coa56.lvl_6_id')->join('coa_lvl_5 coa5', 'coa5.lvl_5_id=coa56.lvl_5_id')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+        return '';
     }
 
     public static function add_coa_lvl6($data){

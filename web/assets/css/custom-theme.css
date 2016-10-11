@@ -180,6 +180,10 @@ ul#sidebar-container > li:hover span{
 	-webkit-transition: border 0.8s ease, box-shadow 0.8s ease;*/
 }
 
+.side-body .table-setting-panel > div div[class*=col-]:last-child{
+	border-top: 3px solid #000;
+}
+
 .side-body.hide-table-setting .main-table-panel{
 	width: 96.8% !important;
 	transition: width 0.5s ease;
@@ -204,6 +208,16 @@ ul#sidebar-container > li:hover span{
 	-webkit-transition: opacity 0.5s ease;
 }
 
+.side-body .table-option-gutter{
+	width: 32px;
+	padding: 0;
+}
+
+.side-body.hide-table-setting .table-option-gutter{
+	width: 0;
+	padding: 0;
+}
+
 .side-body .table-setting-panel *{
 	opacity: 1;
 	/*transition: opacity 0.5s ease;*/
@@ -213,6 +227,10 @@ ul#sidebar-container > li:hover span{
 .side-body.hide-table-setting .table-setting-toggle{
 	/*margin-right: -60px !important;*/
 	border-radius: none !important;
+	background-color: transparent !important;
+	border: none !important;
+	text-decoration: underline;
+	color: #000 !important;
 }
 
 .close-table-option{
@@ -274,12 +292,12 @@ ul#sidebar-container > li:hover span{
 
 .table-setting-panel hr{
 	margin: 0;
-	border: 1px solid #000;
+	/*border: 1px solid #000;*/
 }
 
 .option-title{
 	padding-left: 13px;
-	font-size: 21px;
+	font-size: 18px;
 }
 
 .dataTables_wrapper .row:first-child{

@@ -1,0 +1,142 @@
+/*
+Theme Name: Custom Template
+Author: Boni
+Version: 1.0
+*/
+
+/* General Style */
+
+body{
+	background-color: #F5F5F5;
+}
+
+.container{
+	background-color: #FFF;
+}
+
+header hr{
+	margin-top: 0 !important;
+}
+
+/* Page Navs */
+.page-navs ul{
+	padding-left: 0;
+	margin: 0;
+}
+
+.page-navs ul:before, .page-navs ul:after{
+	content: '';
+	display: table;
+}
+
+.page-navs ul:after{
+	clear: both;
+}
+
+.page-navs ul li{
+	float: left;
+	list-style: none;
+	border: 1px solid #F1F1F1;
+	border-bottom: none;
+}
+
+.page-navs ul li a{
+	padding: 6px 12px;
+	display: block;
+}
+
+.page-navs ul li:hover{
+	background-color: #607D8B;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.page-navs ul li:hover a{
+	color: #FFF;
+	text-decoration: none;
+}
+
+.page-navs ul li+li{
+	border-left: none;
+}
+
+.page-navs li.current_page_item,
+li.current-page-ancestor{
+	background-color: #607D8B;
+}
+
+.page-navs li.current_page_item a,
+li.current-page-ancestor a
+{
+	color: #FFF;
+}
+
+.footer-navs li{
+	list-style: none;
+	float: left;
+	padding-bottom: 20px;
+}
+
+.footer-navs li+li{
+	margin-left: 20px;
+}
+
+.alert-heading{
+	border-radius: 0;
+	width: 100%;
+}
+
+.disclaimer{
+	width: 40%;
+	float: right;
+}
+
+.child-link-navs li{
+	list-style: none;
+	float: left;
+	margin-bottom: 10px;
+}
+
+.child-link-navs li+li{
+	margin-left: 10px;
+}
+
+.child-link-navs li a{
+	text-decoration: none;
+}
+
+.child-link-navs .current_page_item a:link,
+.child-link-navs .current_page_item a:visited{
+	border-bottom: 1px solid #868686;
+	font-weight: bold;
+	cursor: default;
+}
+
+.parent-link{
+	float: left;
+	padding: 0 3px;
+	border-right: 1px solid #DDD;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.parent-link a{
+	color: #6f6f6f;
+}
+
+
+/*POST INFO*/
+.post-name{
+	margin-bottom: 0;
+}
+
+p.post-info{
+	font-size: 87%;
+	color: #999;
+}
+
+p.post-info a:link,
+p.post-info a:visited{
+	color: #999;
+}

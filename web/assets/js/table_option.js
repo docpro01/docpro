@@ -15,10 +15,12 @@ var init_table_option = function(table, side_body){
         state = false;
         var update = setInterval(function() {
             table.columns.adjust().draw();
-        });
+            console.log('hello');
+        }, 1);
+
         setTimeout(function(){
             clearInterval(update);
-        }, 500);
+        }, 5000);
         
     });
 

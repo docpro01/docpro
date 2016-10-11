@@ -51,7 +51,6 @@
 				<button type='button' class='btn btn-default btn-sm ripple-effect close-table-option' style="float: left; margin: 0; height: 100%;">X</button>
 				<h3 class='option-title' style="margin-left: 65px;">Option</h3>
 			</div>
-			<hr>
 			<div class='col-md-12'>
 				<table class='table option-table'>
 					<tr>

@@ -22,15 +22,14 @@
 		</div>
 	</div>
 	<div class='col-md-1' style="width: 32px; padding: 0;">
-		<button type='button' class='btn btn-dark btn-sm ripple-effect table-setting-toggle'><i class='fa fa-caret-left'></i></button>
+		<button type='button' class='btn btn-dark btn-sm ripple-effect table-setting-toggle'>Table Setting</button>
 	</div>
 	<div class='col-md-2 table-setting-panel'>
 		<div class='col-md-12' style="padding: 0;">
 			<div class='col-md-12' style="padding: 0; height: 60px;">
 				<button type='button' class='btn btn-default btn-sm ripple-effect close-table-option' style="float: left; margin: 0; height: 100%;">X</button>
-				<h3 class='option-title' style="margin-left: 65px;">Option</h3>
+				<h3 class='option-title' style="margin-left: 65px;">Table Setting</h3>
 			</div>
-			<hr>
 			<div class='col-md-12'>
 				<table class='table option-table'>
 					<tr>

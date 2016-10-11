@@ -3,13 +3,38 @@
 class Setup extends MY_Controller{
 	
 	function __construct(){
-		parent::__construct('master_layout');
+		parent::__construct('fragments_setup/master_layout');
         if(!($this->session->userdata('logged_in'))) redirect('login');
 	}
 	
 	public function index(){
-        return $this->load->view('fragments/content/account_setup', ['user' => $this->session->userdata('user')]);
+        return $this->load->view($this->layout, ['user' => $this->session->userdata('user'), 'content' => 'fragments_setup/content/welcome']);
 	}
+
+    public function setup_account(){
+        return $this->load->view($this->layout, ['head_css' => 'fragments_setup/head_css/setup_account', 'content' => 'fragments_setup/content/setup_account', 'footer_js' => 'fragments_setup/footer_js/setup_account', 'user' => $this->session->userdata('user')]);
+    }
+
+    public function get_profile(){
+        echo json_encode(['data' => Setup_Model::get_profile($this->session->userdata('user')->cb_id)]);
+    }
+
+    public function edit_profile(){
+        $data = [
+                    'cb_name' => $this->input->get('company_name'),
+                    'cb_ind_name' => $this->input->get('individual_name'),
+                    'name' => $this->input->get('company_name') !== '' ? $this->input->get('company_name') : $this->input->get('individual_name'),
+                    'cb_address' => $this->input->get('address'),
+                    'cb_tin' => $this->input->get('tin'),
+                    'cb_class' => 'company',
+                    'cb_bp_type' => $this->input->get('company_name') === '' ? 'Individual' : 'Non-Individual',
+                    'cb_tax_type' => $this->input->get('tax_type'),
+                    'cb_cno' => $this->input->get('mobile_number'),
+                    'cb_email' => $this->input->get('email'),
+                ];
+
+        Setup_Model::edit_profile($data, $this->session->userdata('user'));
+    }
 
     public function add_tin_no(){
         Setup_Model::add_tin_no($this->session->userdata('user')->cb_id, $this->input->get('tin_no'));
@@ -80,17 +105,47 @@ class Setup extends MY_Controller{
         echo json_encode(Setup_Model::get_tin_tax_type($this->session->userdata('user')->cb_id));
     }
 
-    public function get_employees(){
-        echo json_encode(['data' => Setup_Model::get_employees($this->session->userdata('user')->cb_id, $this->session->userdata('user')->p_id)]);
+    public function get_users(){
+        echo json_encode(['data' => Setup_Model::get_users($this->session->userdata('user')->cb_id, $this->session->userdata('user')->p_id)]);
+    }
+
+    public function get_branch_list(){
+        echo json_encode(Setup_Model::get_branch_list($this->session->userdata('user')->cb_id));
+    }
+
+    public function add_user(){
+        $profile = [
+                    'p_fname' => $this->input->get('add-fname'),
+                    'p_mname' => $this->input->get('add-mname'),
+                    'p_lname' => $this->input->get('add-lname'),
+                    'p_address' => $this->input->get('add-user-address'),
+                    'p_cno' => $this->input->get('add-user-cno'),
+                    'p_email' => $this->input->get('add-user-email'),
+                    'cb_id' => $this->session->userdata('user')->cb_id
+                ];
+
+        $user = [
+                    'u_name' => $this->input->get('add-user-username'),
+                    'u_pass' => password_hash($this->input->get('add-user-username'), PASSWORD_BCRYPT, ['cost' => 11]),
+                    'u_type' => $this->input->get('add-user-access-level'),
+                    'u_company' => 'company',
+                    'subs_type' => $this->session->userdata('user')->subs_type,
+                    'subs_exp_date' => $this->session->userdata('user')->subs_exp_date,
+                    'setup' => '0',
+                    'cbbr_id' => $this->input->get('add-user-branch'),
+                    'u_validity_date' => $this->input->get('add-user-validity-date')
+                ];
+
+        Setup_Model::add_user($profile, $user);
     }
 
     public function get_branches(){
         echo json_encode(['data' => Setup_Model::get_branches($this->session->userdata('user')->cb_id)]);
     }
 
-    public function table_get_employees(){
-        echo json_encode(['data' => Setup_Model::get_employees($this->session->userdata('user')->cbbr_id, $this->session->userdata('user')->p_id)]);
-    }
+    // public function table_get_employees(){
+    //     echo json_encode(['data' => Setup_Model::get_users($this->session->userdata('user')->cbbr_id, $this->session->userdata('user')->p_id)]);
+    // }
 
     public function table_get_branches($slug){
         echo json_encode(['data' => Setup_Model::table_get_branches($this->session->userdata('user')->cb_id, $slug)]);

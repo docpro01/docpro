@@ -26,17 +26,48 @@
 		<link href="<?php echo base_url(); ?>libs/selectize/css/normalize.css" rel="stylesheet">
 		<link href="<?php echo base_url(); ?>libs/selectize/css/selectize.css" rel="stylesheet">
 
+		<style>
+			p { 
+			    margin: 5px 30px 15px;
+			    font-family:"Century Gothic", "HelveticaNeueLT Pro 45 Lt", sans-serif;  
+			}
+			.demo div { 
+			    width: 400px;
+			    height: 65px;
+			    line-height: 60px;
+			    font-family: "Century Gothic", "Helvetica", sans-serif;
+			    font-size: 50px;
+			    font-weight: bold;
+			    text-align: center;
+			    margin-left: 30px; 
+			}
+			.demo2 { 
+			    color: #666;
+			    background-color: #aaa;
+			    text-shadow: 0px -1px 0px rgba(0,0,0,.5); /* 50% black coming from the top */
+			}
+
+		</style>
+
 <!-- CONTENT -->
 
 		<div style="background: #FFF url('assets/img/background_1.png') repeat; box-shadow: 0 0 1px 1px #e8e8e8; border-bottom: 1px solid #e8e8e8; margin: 0; width: 100%; padding: 16px;">
-			<span style="font-weight: bold; margin-left: 86px;">DocPro Business Solutions</span>
-			<span style="margin-right: 86px; float: right;">Bookkeeping System</span>
+			<span style="font-weight: bold; margin-left: 10%;">DocPro Business Solutions</span>
+			<span class='demo' style="margin-right: 10%; float: right;"><span class='demo2'><p>Bookkeeping System</p></span></span>
 		</div>
-		<div class='logo' style="margin: 0 auto; margin-top: -6px; width: 150px; box-shadow: 0 2px 1px 1px #e8e8e8;">
+		<div class='logo' style="margin: 0 auto; margin-top: -52px; width: 150px; box-shadow: 0 2px 1px 1px #e8e8e8;">
 			<img src="<?php base_url() ?>assets/img/logo_setup.png" style='width: 150px;'>
 		</div>
-
-
+		<div class='container'>
+			<div class='row'>
+				<div class='col-md-12' style="text-align: center;">
+					<h1>Welcome</h1>
+					<h3>to</h3>
+					<h1><span style="font-weight: bold;"><span style="color: blue;">Doc</span>Pro</span> Bookkeeping System</h1>
+					<a class='btn btn-primary btn-lg' href="#" style="margin-top: 50px;">Continue setup my Account</a>
+				</div>
+			</div>
+		</div>
 
 <!-- END CONTENT -->
 

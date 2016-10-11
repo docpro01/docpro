@@ -383,6 +383,9 @@ $route['journals/specials/bp_transaction/get']							= 'Journals_DIR/Specials/ge
 
 
 $route['setup']															= 'Setup';
+$route['setup/account']													= 'Setup/setup_account';
+$route['setup/setup1/get_profile']										= 'Setup/get_profile';
+$route['setup/setup1/edit_profile']										= 'Setup/edit_profile';
 $route['setup/setup1/add_tin_no']										= 'Setup/add_tin_no';
 $route['setup/setup1/add_tax_type']										= 'Setup/add_tax_type';
 $route['setup/setup1/add_employee']										= 'Setup/add_employee';
@@ -392,7 +395,9 @@ $route['setup/setup1/add_branch']										= 'Setup/add_branch';
 $route['setup/setup1/edit_branch']										= 'Setup/edit_branch';
 $route['setup/setup1/delete_branch']									= 'Setup/delete_branch';
 $route['setup/setup1/get_tin_tax_type']									= 'Setup/get_tin_tax_type';
-$route['setup/setup1/get_employees']									= 'Setup/get_employees';
+$route['setup/setup1/get_users']										= 'Setup/get_users';
+$route['setup/setup2/get_branch_list']									= 'Setup/get_branch_list';
+$route['setup/setup2/add_user']											= 'Setup/add_user';
 $route['setup/setup1/get_branches']										= 'Setup/get_branches';
 $route['setup/setup2/table_get_employees']								= 'Setup/table_get_employees';
 $route['setup/setup2/table_get_branches/(:any)']						= 'Setup/table_get_branches/$1';
