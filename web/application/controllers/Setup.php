@@ -139,6 +139,35 @@ class Setup extends MY_Controller{
         Setup_Model::add_user($profile, $user);
     }
 
+    public function edit_user(){
+        $profile = [
+                    'p_fname' => $this->input->get('edit-fname'),
+                    'p_mname' => $this->input->get('edit-mname'),
+                    'p_lname' => $this->input->get('edit-lname'),
+                    'p_address' => $this->input->get('edit-user-address'),
+                    'p_cno' => $this->input->get('edit-user-cno'),
+                    'p_email' => $this->input->get('edit-user-email')
+                ];
+
+        $user = [
+                    'u_name' => $this->input->get('edit-user-username'),
+                    'u_pass' => password_hash($this->input->get('edit-user-username'), PASSWORD_BCRYPT, ['cost' => 11]),
+                    'u_type' => $this->input->get('edit-user-access-level'),
+                    'cbbr_id' => $this->input->get('edit-user-branch'),
+                    'u_validity_date' => $this->input->get('edit-user-validity-date')
+                ];
+        $p_id = $this->input->get('edit-profile-id');
+        $u_id = $this->input->get('edit-user-id');
+
+        Setup_Model::edit_user($profile, $user, $p_id, $u_id);
+    }
+
+    public function delete_user(){
+        $p_id = $this->input->get('p_id');
+        $u_id = $this->input->get('u_id');
+        Setup_Model::delete_user($p_id, $u_id);
+    }
+
     public function get_branches(){
         echo json_encode(['data' => Setup_Model::get_branches($this->session->userdata('user')->cb_id)]);
     }
@@ -196,17 +225,17 @@ class Setup extends MY_Controller{
     public function get_coa_lvl1(){
         echo json_encode(['data' => Setup_Model::get_coa_lvl1($this->session->userdata('user')->cb_id)]);
     }
-    public function get_coa_lvl2(){
-        echo json_encode(['data' => Setup_Model::get_coa_lvl2($this->session->userdata('user')->cb_id)]);
+    public function get_coa_lvl2($slug){
+        echo json_encode(['data' => Setup_Model::get_coa_lvl2($slug, $this->session->userdata('user')->cb_id)]);
     }
-    public function get_coa_lvl3(){
-        echo json_encode(['data' => Setup_Model::get_coa_lvl3($this->session->userdata('user')->cb_id)]);
+    public function get_coa_lvl3($slug){
+        echo json_encode(['data' => Setup_Model::get_coa_lvl3($slug, $this->session->userdata('user')->cb_id)]);
     }
-    public function get_coa_lvl4(){
-        echo json_encode(['data' => Setup_Model::get_coa_lvl4($this->session->userdata('user')->cb_id)]);
+    public function get_coa_lvl4($slug){
+        echo json_encode(['data' => Setup_Model::get_coa_lvl4($slug, $this->session->userdata('user')->cb_id)]);
     }
-    public function get_coa_lvl5(){
-        echo json_encode(['data' => Setup_Model::get_coa_lvl5($this->session->userdata('user')->cb_id)]);
+    public function get_coa_lvl5($slug){
+        echo json_encode(['data' => Setup_Model::get_coa_lvl5($slug, $this->session->userdata('user')->cb_id)]);
     }
     public function get_coa_lvl6(){
         echo json_encode(['data' => Setup_Model::get_coa_lvl6($this->session->userdata('user')->cb_id)]);
@@ -256,6 +285,84 @@ class Setup extends MY_Controller{
     }
     public function get_tax_types(){
         echo json_encode(Setup_Model::get_tax_types());
+    }
+
+    public function add_coa_lvl1(){
+        $data = [
+                    'lvl_1_name' => $this->input->get('add-lvl-1-name'),
+                    'lvl_1_company' => 'company',
+                    'lvl_1_setup_company' => 'company',
+                ];
+        Setup_Model::add_coa_lvl1($data, $this->session->userdata('user'));
+    }
+
+    public function edit_coa_lvl1(){
+        $data = [
+                    'lvl_1_code' => $this->input->get('edit-lvl-1-code'),
+                    'lvl_1_name' => $this->input->get('edit-lvl-1-name')
+        ];
+        Setup_Model::edit_coa_lvl1($data, $this->input->get('edit-id'), $this->session->userdata('user'));
+    }
+
+    public function delete_coa_lvl1(){
+        Setup_Model::delete_coa_lvl1($this->input->get('id'));
+    }
+
+    public function get_level_1(){
+        echo json_encode(Setup_Model::get_level_1($this->session->userdata('user')));
+    }
+
+    public function add_coa_lvl2(){
+        $data = [
+                    'lvl_2_name' => $this->input->get('add-lvl-2-name'),
+                    'lvl_2_company' => 'company',
+                    'lvl_2_setup_company' => 'company'
+                ];
+        Setup_Model::add_coa_lvl2($data, $this->input->get('lvl-1-id'), $this->session->userdata('user'));
+    }
+
+    public function edit_coa_lvl2(){
+        $data = [
+                    'lvl_2_code' => $this->input->get('edit-lvl-2-code'),
+                    'lvl_2_name' => $this->input->get('edit-lvl-2-name')
+                ];
+        $lvl_1_id = $this->input->get('lvl-1-id');
+        $edit_id = $this->input->get('edit-id');
+        Setup_Model::edit_coa_lvl2($data, $lvl_1_id, $edit_id, $this->session->userdata('user'));
+    }
+
+    public function delete_coa_lvl2(){
+        Setup_Model::delete_coa_lvl2($this->input->get('id'));
+    }
+
+    public function get_level_2(){
+        echo json_encode(Setup_Model::get_level_2($this->session->userdata('user')));
+    }
+
+    public function add_coa_lvl3(){
+        $data = [
+                    'lvl_3_name' => $this->input->get('add-lvl-3-name'),
+                    'lvl_3_company' => 'company',
+                    'lvl_3_setup_company' => 'company',
+                    'lvl_3_bir' => $this->input->get('add-lvl-3-bir'),
+                ];
+        Setup_Model::add_coa_lvl3($data, $this->input->get('lvl-2-id'), $this->session->userdata('user'));
+    }
+
+    public function edit_coa_lvl3(){
+        $data = [
+                    'lvl_3_code' => $this->input->get('edit-lvl-3-code'),
+                    'lvl_3_code_int' => floatval($this->input->get('edit-lvl-3-code')),
+                    'lvl_3_name' => $this->input->get('edit-lvl-3-name'),
+                    'lvl_3_bir' => $this->input->get('edit-lvl-3-bir'),
+                ];
+        $lvl_2_id = $this->input->get('lvl-2-id');
+        $edit_id = $this->input->get('edit-id');
+        Setup_Model::edit_coa_lvl3($data, $lvl_2_id, $edit_id, $this->session->userdata('user'));
+    }
+
+    public function delete_coa_lvl3(){
+        Setup_Model::delete_coa_lvl3($this->input->get('id'));
     }
 
     public function add_coa_lvl5(){

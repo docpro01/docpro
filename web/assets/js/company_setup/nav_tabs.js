@@ -73,12 +73,12 @@ $('#coa-tab-5 button').click(function(){
 	$('#coa-tab-5').addClass('active');
 	window.scrollTo(0, 0);
 });
-$('#coa-tab-6 button').click(function(){
-	coaSequence.goTo(6);
-	$('.coa-tab').removeClass('active');
-	$('#coa-tab-6').addClass('active');
-	window.scrollTo(0, 0);
-});
+// $('#coa-tab-6 button').click(function(){
+// 	coaSequence.goTo(6);
+// 	$('.coa-tab').removeClass('active');
+// 	$('#coa-tab-6').addClass('active');
+// 	window.scrollTo(0, 0);
+// });
 
 $('#go_to_users').click(function(){
 	mySequence1.goTo(2);

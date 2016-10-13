@@ -3,23 +3,21 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_setup/nav_tabs.js"></script>
 
 <script type="text/javascript">
-	var flag1 = 0;
-	var flag2 = 0;
+	// var flag1 = 0;
+	// var flag2 = 0;
 	$(document).ready(function(){
 		initRipple();
-		$.get(window.location.origin+'/setup/setup1/get_tin_tax_type', function(response){
-			var tin_no = JSON.parse(response)[0].cb_tin;
-			var tax_type = JSON.parse(response)[0].cb_tax_type;
-			$('#tin_no').val(tin_no);
-			$('#tax_type').val(tax_type);
-			$('#tax_type').selectize({create: false});
+		// $.get(window.location.origin+'/setup/setup1/get_tin_tax_type', function(response){
+		// 	var tin_no = JSON.parse(response)[0].cb_tin;
+		// 	var tax_type = JSON.parse(response)[0].cb_tax_type;
+		// 	$('#tin_no').val(tin_no);
+		// 	$('#tax_type').val(tax_type);
+		// 	$('#tax_type').selectize({create: false});
 
-			if(tin_no !== ''){flag1 = 1;}
-			if(tax_type !== ''){flag2 = 1;}
-		});
+		// 	if(tin_no !== ''){flag1 = 1;}
+		// 	if(tax_type !== ''){flag2 = 1;}
+		// });
 		$(document).ajaxStop(function(){
-		  	profile_table.ajax.reload();
-		  	branch_table.ajax.reload();
 		  	$('#loader').removeClass('show');
 		});
 	});	
@@ -93,134 +91,6 @@
 		$(this).popover('toggle');
 	});
 </script>
-<script>
-	// $('#tin_no').focusout(function(){
-	// 	var _this = $(this);
-	// 	setTimeout(function(){
-	// 		if(!(_this.hasClass('invalid-input')) && !(_this).hasClass('invalid-tin-input')){
-	// 			var tin_no = $(_this).val();
-	// 			if(tin_no !== ''){
-	// 				$.get(window.location.origin+'/setup/setup1/add_tin_no', {tin_no: tin_no}, function(response){
-	// 					flag1 = 1;
-	// 				});		
-	// 			}
-	// 		}
-	// 	}, 300);
-	// });
-	// $('#tax_type').change(function(){
-	// 	var tax_type = $(this).val();
-	// 	if(tax_type !== ''){
-	// 		$.get(window.location.origin+'/setup/setup1/add_tax_type', {tax_type: tax_type}, function(response){
-	// 			flag2 = 1;
-	// 		});
-	// 	}
-	// });
-
-	$('body').on('click', '#add-branch-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-					'add-branch-name': popover.find('input[name=add-branch-name]').val(),
-					'add-branch-address': popover.find('input[name=add-branch-address]').val(),
-					'add-branch-tin': popover.find('input[name=add-branch-tin]').val(),
-					'add-branch-cno': popover.find('input[name=add-branch-cno]').val(),
-					'add-branch-email': popover.find('input[name=add-branch-email]').val()
-				}
-		$.get(window.location.origin+'/setup/setup1/add_branch', data, function(response){
-			branch_table.ajax.reload();
-			$('.popover').popover('hide');
-       		$('.card-body button').removeAttr('disabled');
-		});
-	});
-	$('body').on('click', '#edit-branch-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-					'edit-id': popover.find('input[name=edit-id]').val(),
-					'edit-branch-name': popover.find('input[name=edit-branch-name]').val(),
-					'edit-branch-address': popover.find('input[name=edit-branch-address]').val(),
-					'edit-branch-tin': popover.find('input[name=edit-branch-tin]').val(),
-					'edit-branch-cno': popover.find('input[name=edit-branch-cno]').val(),
-					'edit-branch-email': popover.find('input[name=edit-branch-email]').val()
-				}
-		$.get(window.location.origin+'/setup/setup1/edit_branch', data, function(response){
-			branch_table.ajax.reload();
-			$('.popover').popover('hide');
-       		$('.card-body button').removeAttr('disabled');
-		});
-	});
-
-	$('#add-branch-btn').click(function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('add-branch-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#add-branch-popover').html();
-			},
-			callback: function(){
-				$('.add-branch-modal').addClass('animate');
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#branch-table').on('click', '.edit', function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-        var data = branch_table.row(this.closest('tr')).data();
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('edit-branch-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#edit-branch-popover').html();
-			},
-			callback: function(){
-				$('.edit-branch-modal').find('input[name=edit-branch-name]').val(data.cb_name);
-				$('.edit-branch-modal').find('input[name=edit-branch-address]').val(data.cb_address);
-				$('.edit-branch-modal').find('input[name=edit-branch-tin]').val(data.cb_tin);
-				$('.edit-branch-modal').find('input[name=edit-branch-cno]').val(data.cb_cno);
-				$('.edit-branch-modal').find('input[name=edit-branch-email]').val(data.cb_email);
-				$('.edit-branch-modal').find('input[name=edit-id]').val(data.cb_id);
-				$('.edit-branch-modal').addClass('animate');
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#branch-table').on('click', '.delete', function(){
-		var cb_id = branch_table.row(this.closest('tr')).data().cb_id;
-		var cbbr_id = branch_table.row(this.closest('tr')).data().cbbr_id;
-		$.get(window.location.origin+'/setup/setup1/delete_branch', {cb_id: cb_id, cbbr_id: cbbr_id}, function(response){
-			branch_table.ajax.reload();
-			$('.popover').popover('hide');
-       		$('.card-body button').removeAttr('disabled');
-		});
-	});
-</script>
 
 <!-- SETUP 2 FUNCTION -->
 <script>
@@ -245,21 +115,25 @@
        		$('.card-body button').removeAttr('disabled');
 		});
 	});
-	$('body').on('click', '#edit-employee-submit', function(){
+	$('body').on('click', '#edit-user-submit', function(){
 		var popover = $(this).closest('.popover');
 		var data = {
-					'edit-id' : popover.find('input[name=edit-id]').val(),
-					'edit-fname': popover.find('input[name=edit-fname]').val(),
+					'edit-fname' : popover.find('input[name=edit-fname]').val(),
 					'edit-mname': popover.find('input[name=edit-mname]').val(),
 					'edit-lname': popover.find('input[name=edit-lname]').val(),
-					'edit-emp-address': popover.find('input[name=edit-emp-address]').val(),
-					'edit-emp-cno': popover.find('input[name=edit-emp-cno]').val(),
-					'edit-emp-email': popover.find('input[name=edit-emp-email]').val(),
+					'edit-user-address': popover.find('input[name=edit-user-address]').val(),
+					'edit-user-cno': popover.find('input[name=edit-user-cno]').val(),
+					'edit-user-email': popover.find('input[name=edit-user-email]').val(),
+					'edit-user-branch': popover.find('select[name=edit-user-branch]').val(),
+					'edit-user-access-level': popover.find('select[name=edit-user-access-level]').val(),
+					'edit-user-username': popover.find('input[name=edit-user-username]').val(),
+					'edit-user-password': popover.find('input[name=edit-user-password]').val(),
+					'edit-user-validity-date': popover.find('input[name=edit-user-validity-date]').val(),
+					'edit-profile-id': popover.find('input[name=edit-profile-id]').val(),
+					'edit-user-id': popover.find('input[name=edit-user-id]').val(),
 				}
-		$.get(window.location.origin+'/setup/setup1/edit_employee', data, function(response){
-			employee_table.ajax.reload();
-			admin_users.ajax.reload();
-			admin_branches.ajax.reload();
+		$.get(window.location.origin+'/setup/setup2/edit_user', data, function(response){
+			users_table.ajax.reload();
 			$('.popover').popover('hide');
        		$('.card-body button').removeAttr('disabled');
 		});
@@ -281,7 +155,6 @@
 			},
 			callback: function(){
 				var popover = $('.popover.add-user-modal');
-				popover.addClass('animate');
 				var access_level = popover.find('select[name=add-user-access-level]').selectize();
 				var branches = popover.find('select[name=add-user-branch]').selectize({
 					create: false,
@@ -315,7 +188,7 @@
 				popover.find('input[name=add-user-username]').keyup(function(){
 					popover.find('input[name=add-user-password]').val($(this).val());
 				});
-
+				popover.addClass('animate');
 				initRipple();
 		        no_space();
 		        initNumberValidation();
@@ -332,26 +205,72 @@
 		$('body').on('hidden.bs.popover', function (e) {
             $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
         });
-        var data = employee_table.row(this.closest('tr')).data();
+        var data = users_table.row(this.closest('tr')).data();
 		$(this).popover({
 			animation: true,
 			html: true,
 			placement: function(context, src){
-				$(context).addClass('edit-employee-modal');
+				$(context).addClass('edit-user-modal');
 				return 'right';
 			},
 			content: function(){
-				return $('#edit-employee-popover').html();
+				return $('#edit-user-popover').html();
 			},
 			callback: function(){
-				$('.edit-employee-modal').find('input[name=edit-fname]').val(data.p_fname);
-				$('.edit-employee-modal').find('input[name=edit-mname]').val(data.p_mname);
-				$('.edit-employee-modal').find('input[name=edit-lname]').val(data.p_lname);
-				$('.edit-employee-modal').find('input[name=edit-emp-address]').val(data.p_address);
-				$('.edit-employee-modal').find('input[name=edit-emp-cno]').val(data.p_cno);
-				$('.edit-employee-modal').find('input[name=edit-emp-email]').val(data.p_email);
-				$('.edit-employee-modal').find('input[name=edit-id]').val(data.p_id);
-				$('.edit-employee-modal').addClass('animate');
+				var popover = $('.popover.edit-user-modal');
+				var access_level = popover.find('select[name=edit-user-access-level]').selectize();
+				var branches = popover.find('select[name=edit-user-branch]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null
+				});
+				var selectize = branches[0].selectize;
+				selectize.clear();
+				selectize.clearOptions();
+				$.get(window.location.origin+'/setup/setup2/get_branch_list', function(response){
+					var branch_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(branch_data, function(index, data){
+						selectOptions.push({
+				            text: data.name,
+				            value: data.cbbr_id
+			          	});
+					});
+
+					selectize.clear();
+					selectize.clearOptions();
+					selectize.renderCache = {};
+					selectize.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize.setValue(data.cbbr_id);
+				});
+
+				popover.find('input[name=edit-user-username]').keyup(function(){
+					popover.find('input[name=edit-user-password]').val($(this).val());
+				});
+
+				popover.find('input[name=edit-fname]').val(data.p_fname);
+				popover.find('input[name=edit-mname]').val(data.p_mname);
+				popover.find('input[name=edit-lname]').val(data.p_lname);
+				popover.find('input[name=edit-user-address]').val(data.p_address);
+				popover.find('input[name=edit-user-cno]').val(data.p_cno);
+				popover.find('input[name=edit-user-email]').val(data.p_email);
+				popover.find('input[name=edit-user-access-level]').val(data.u_type);
+				popover.find('input[name=edit-user-username]').val(data.u_name);
+				popover.find('input[name=edit-user-password]').val(data.u_name);
+				var date = Date.parse(data.u_validity_date);
+				popover.find('input[name=edit-user-validity-date]').val(date.toString('yyyy-MM-dd'));
+				popover.find('input[name=edit-profile-id]').val(data.p_id);
+				popover.find('input[name=edit-user-id]').val(data.u_id);
+				popover.addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();	
             },
             container: 'body'
 		}).on('show.bs.popover', function(){
@@ -359,279 +278,554 @@
             $('.card-body button').attr('disabled', true);
         });
 		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
 	});
 	$('#users-table').on('click', '.delete', function(){
-		var p_id = employee_table.row(this.closest('tr')).data().p_id;
-		$.get(window.location.origin+'/setup/setup1/delete_employee', {p_id: p_id}, function(response){
-			employee_table.ajax.reload();
+		var table_data = users_table.row(this.closest('tr')).data();
+		var data = {
+					'p_id': table_data.p_id,
+					'u_id': table_data.u_id
+				};
+		$.get(window.location.origin+'/setup/setup2/delete_user', data, function(response){
+			users_table.ajax.reload();
 			$('.popover').popover('hide');
        		$('.card-body button').removeAttr('disabled');
 		});
 	});
 </script>
 
-<!-- SETUP 2 FUNCTION -->
-<!-- <script>
-	var p_id = 0;
-	$('#admin-users').on('click', '.branch-btn', function(){
-		var data = admin_users.row(this.closest('tr')).data();
-		admin_branches.ajax.url(window.location.origin+'/setup/setup2/table_get_branches/'+data.p_id);
-	    admin_branches.ajax.reload();
-		mySequence1.goTo(5);
-		p_id = data.p_id;
-	});
-
-	$('body').on('click', '#add-user-account-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-			'add-username': popover.find('input[name=add-username]').val(),
-			'add-password': popover.find('input[name=add-password]').val(),
-			'add-confirm-password': popover.find('input[name=add-confirm-password]').val(),
-			'add-branch': popover.find('select[name=add-branch]').val(),
-			'add-type': popover.find('select[name=add-type]').val(),
-			'add-p-id': popover.find('input[name=add-p-id]').val()
-		}
-		$.get(window.location.origin+'/setup/setup2/add_user_branch', data, function(response){
-			employee_table.ajax.reload();
-			admin_branches.ajax.reload();
-			branch_table.ajax.reload();
-			admin_users.ajax.reload();
-			$('.popover').removeClass('animate');
-			$('.popover').popover('hide');
-	        $('.card-body button').removeAttr('disabled');
-		});
-	});
-	$('body').on('click', '#edit-user-account-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-			'edit-username': popover.find('input[name=edit-username]').val(),
-			'edit-password': popover.find('input[name=edit-password]').val(),
-			'edit-confirm-password': popover.find('input[name=edit-confirm-password]').val(),
-			'edit-branch': popover.find('select[name=edit-branch]').val(),
-			'edit-type': popover.find('select[name=edit-type]').val(),
-			'edit-u-id': popover.find('input[name=edit-u-id]').val()
-		}
-		$.get(window.location.origin+'/setup/setup2/edit_user_branch', data, function(response){
-			employee_table.ajax.reload();
-			admin_branches.ajax.reload();
-			branch_table.ajax.reload();
-			admin_users.ajax.reload();
-			$('.popover').removeClass('animate');
-			$('.popover').popover('hide');
-	        $('.card-body button').removeAttr('disabled');
-		});
-	});
-	$('#add-user-account').click(function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-
-		var initBranch = function(){
-			var selectize_lvl1 = $('#add-user-branch').selectize({
-				create: false,
-				sortField: {
-					field: 'text',
-					direction: 'asc'
-				},
-				dropdownParent: null
-			});
-			var selectize = $('#add-user-branch.selectized').selectize()[0].selectize;
-			selectize.clear();
-			selectize.clearOptions();
-			$.get(window.location.origin+'/setup/setup2/get_user_available_branch', {p_id: p_id}, function(response){
-				var data = JSON.parse(response);
-				var selectOptions = [];
-				$.each(data, function(index, data){
-					selectOptions.push({
-			            text: data.name,
-			            value: data.cbbr_id
-		          	});
-				});
-
-				selectize.clear();
-				selectize.clearOptions();
-				selectize.renderCache = {};
-				selectize.load(function(callback) {
-				    callback(selectOptions);
-				});
-			});
-		}
-
-		var initPasswordValidation = function(){
-			var pass1 = $('.popover').find('#password1');
-			var pass2 = $('.popover').find('#password2');
-			var alert = $('.popover').find('#password_not_match');
-			pass1.keyup(function(){
-				if($(this).val() !== pass2.val()){
-					$(this).css('border', '1px solid red');
-					pass2.css('border', '1px solid red');
-					alert.css('display', 'block');
-					$('#add-user-branch-submit').attr('disabled', true);
-				}else{
-					$(this).css('border', '1px solid #CCC');
-					pass2.css('border', '1px solid #CCC');
-					alert.css('display', 'none');
-					$('#add-user-branch-submit').removeAttr('disabled');
-				}
-			});
-			pass2.keyup(function(){
-				if($(this).val() !== pass1.val()){
-					$(this).css('border', '1px solid red');
-					pass1.css('border', '1px solid red');
-					alert.css('display', 'block');
-					$('#add-user-branch-submit').attr('disabled', true);
-				}else{
-					$(this).css('border', '1px solid #CCC');
-					pass1.css('border', '1px solid #CCC');
-					alert.css('display', 'none');
-					$('#add-user-branch-submit').removeAttr('disabled');
-				}
-			});
-		}
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('add-user-account-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#add-user-account-popover').html();
-			},
-			callback: function(){
-				$('.add-user-account-modal').addClass('animate');
-				$('#add_p_id').val(p_id);
-				initBranch();
-				initPasswordValidation();
-				$('#add-user-type').selectize();
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#admin-branches').on('click', '.edit', function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-		var data = admin_branches.row(this.closest('tr')).data();
-		var initBranch = function(){
-			var b_selectize = $('#edit-user-branch').selectize({
-				create: false,
-				sortField: {
-					field: 'text',
-					direction: 'asc'
-				},
-				dropdownParent: null
-			});
-			var branch_selectize = b_selectize[0].selectize;
-			branch_selectize.clear();
-			branch_selectize.clearOptions();
-			$.get(window.location.origin+'/setup/setup2/get_user_available_branch_edit', {p_id: p_id, br_id: data.cb_id}, function(response){
-				var json_data = JSON.parse(response);
-				var selectOptions = [];
-				$.each(json_data, function(index, data){
-					selectOptions.push({
-			            text: data.name,
-			            value: data.cbbr_id
-		          	});
-				});
-
-				branch_selectize.clear();
-				branch_selectize.clearOptions();
-				branch_selectize.renderCache = {};
-				branch_selectize.load(function(callback) {
-				    callback(selectOptions);
-				});
-				branch_selectize.setValue(data.cb_id);
-			});
-		}
-
-		var initPasswordValidation = function(){
-			var pass1 = $('.popover').find('#password1');
-			var pass2 = $('.popover').find('#password2');
-			var alert = $('.popover').find('#password_not_match');
-			pass1.keyup(function(){
-				if($(this).val() !== pass2.val()){
-					$(this).css('border', '1px solid red');
-					pass2.css('border', '1px solid red');
-					alert.css('display', 'block');
-					$('#edit-user-branch-submit').attr('disabled', true);
-				}else{
-					$(this).css('border', '1px solid #CCC');
-					pass2.css('border', '1px solid #CCC');
-					alert.css('display', 'none');
-					$('#edit-user-branch-submit').removeAttr('disabled');
-				}
-			});
-			pass2.keyup(function(){
-				if($(this).val() !== pass1.val()){
-					$(this).css('border', '1px solid red');
-					pass1.css('border', '1px solid red');
-					alert.css('display', 'block');
-					$('#edit-user-branch-submit').attr('disabled', true);
-				}else{
-					$(this).css('border', '1px solid #CCC');
-					pass1.css('border', '1px solid #CCC');
-					alert.css('display', 'none');
-					$('#edit-user-branch-submit').removeAttr('disabled');
-				}
-			});
-		}
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('edit-user-account-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#edit-user-account-popover').html();
-			},
-			callback: function(){
-				$('.edit-user-account-modal').addClass('animate');
-				$('#edit_p_id').val(p_id);
-				initBranch();
-				initPasswordValidation();
-				var user_type = $('#edit-user-type').selectize();
-				user_type[0].selectize.setValue(data.u_type);
-				$('.popover.edit-user-account-modal').find('input[name=edit-username]').val(data.u_name);
-				$('.popover.edit-user-account-modal').find('input[name=edit-u-id]').val(data.u_id);
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#admin-branches').on('click', '.delete', function(){
-		var data = admin_branches.row(this.closest('tr')).data();
-		$.get(window.location.origin+'/setup/setup2/delete_user_branch', {u_id: data.u_id}, function(response){
-			admin_branches.ajax.reload();
-			employee_table.ajax.reload();
-			branch_table.ajax.reload();
-			admin_users.ajax.reload();
-		});
-	});
-</script> -->
-
 <!-- COA -->
 <script>
+	$('body').on('click', '#add-lvl-1-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'add-lvl-1-name': popover.find('input[name=add-lvl-1-name]').val()
+				}
+		$.get(window.location.origin+'/setup/setup3/add_coa_lvl1', data, function(){
+			lvl1.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('body').on('click', '#edit-lvl-1-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'edit-lvl-1-code': popover.find('input[name=edit-lvl-1-code]').val(),
+					'edit-lvl-1-name': popover.find('input[name=edit-lvl-1-name]').val(),
+					'edit-id': popover.find('input[name=edit-id]').val()
+				}
+		$.get(window.location.origin+'/setup/setup3/edit_coa_lvl1', data, function(){
+			lvl1.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('#add-lvl-1-btn').click(function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('add-lvl-1-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#add-lvl1-popover').html();
+			},
+			callback: function(){
+				$('.popover.add-lvl-1-modal').addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl1').on('click', '.edit', function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        var data = lvl1.row(this.closest('tr')).data();
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('edit-lvl-1-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#edit-lvl1-popover').html();
+			},
+			callback: function(){
+				$('.popover.edit-lvl-1-modal').addClass('animate');
+				var popover = $('.popover.edit-lvl-1-modal');
+				popover.find('input[name=edit-lvl-1-code]').val(data.lvl_1_code);
+				popover.find('input[name=edit-lvl-1-name]').val(data.lvl_1_name);
+				popover.find('input[name=edit-id]').val(data.lvl_1_id);
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl1').on('click', '.delete', function(){
+        var data = lvl1.row(this.closest('tr')).data();
+        $.get(window.location.origin+'/setup/setup3/delete_coa_lvl1', {id: data.lvl_1_id}, function(){
+        	lvl1.ajax.reload();
+        });
+	});
+
+	$('body').on('click', '#add-lvl-2-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+				'lvl-1-id': lvl_1_id,
+				'add-lvl-2-name': popover.find('input[name=add-lvl-2-name]').val() 
+		}
+		$.get(window.location.origin+'/setup/setup3/add_coa_lvl2', data, function(){
+			lvl2.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('body').on('click', '#edit-lvl-2-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'edit-id': popover.find('input[name=edit-id]').val(),
+					'lvl-1-id': lvl_1_id,
+					'edit-lvl-2-code': popover.find('input[name=edit-lvl-2-code]').val(),
+					'edit-lvl-2-name': popover.find('input[name=edit-lvl-2-name]').val()
+				}
+		$.get(window.location.origin+'/setup/setup3/edit_coa_lvl2', data, function(){
+			lvl2.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('#add-lvl-2-btn').click(function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('add-lvl-2-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#add-lvl2-popover').html();
+			},
+			callback: function(){
+				var popover = $('.popover.add-lvl-2-modal');
+				popover.find('select[name=add-coa2-lvl-1]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.add-lvl-2-modal').find('input[name=lvl1_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.add-lvl-2-modal').find('input[name=lvl1_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize = $('#add-coa2-lvl-1.selectized').selectize()[0].selectize;
+				selectize.clear();
+				selectize.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_1',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_1_name,
+				            value: lvl.lvl_1_id,
+				            code: lvl.lvl_1_code
+			          	});
+					});
+
+					selectize.clear();
+					selectize.clearOptions();
+					selectize.renderCache = {};
+					selectize.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize.setValue(lvl_1_id);
+				});
+				$('.popover.add-lvl-2-modal').addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl2').on('click', '.edit', function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        var data = lvl2.row(this.closest('tr')).data();
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('edit-lvl-2-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#edit-lvl2-popover').html();
+			},
+			callback: function(){
+				var popover = $('.popover.edit-lvl-2-modal');
+				popover.find('select[name=edit-coa2-lvl-1]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.edit-lvl-2-modal').find('input[name=lvl1_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.edit-lvl-2-modal').find('input[name=lvl1_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize = $('#edit-coa2-lvl-1.selectized').selectize()[0].selectize;
+				selectize.clear();
+				selectize.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_1',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_1_name,
+				            value: lvl.lvl_1_id,
+				            code: lvl.lvl_1_code
+			          	});
+					});
+
+					selectize.clear();
+					selectize.clearOptions();
+					selectize.renderCache = {};
+					selectize.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize.setValue(data.lvl_1_id);
+				});
+				popover.find('input[name=edit-id]').val(data.lvl_2_id);
+				popover.find('input[name=edit-lvl-2-code]').val(data.lvl_2_code);
+				popover.find('input[name=edit-lvl-2-name]').val(data.lvl_2_name);
+				$('.popover.edit-lvl-2-modal').addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl2').on('click', '.delete', function(){
+		var data = lvl2.row(this.closest('tr')).data();
+		$.get(window.location.origin+'/setup/setup3/delete_coa_lvl2', {id: data.lvl_2_id}, function(){
+			lvl2.ajax.reload();
+		});
+	});
+	
+	$('body').on('click', '#add-lvl-3-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'lvl-2-id': lvl_2_id,
+					'add-lvl-3-name': popover.find('input[name=add-lvl-3-name]').val(),
+					'add-lvl-3-bir': popover.find('input[name=add-lvl-3-bir]').val()
+				}
+		$.get(window.location.origin+'/setup/setup3/add_coa_lvl3', data, function(){
+			lvl3.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('body').on('click', '#edit-lvl-3-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'edit-id': popover.find('input[name=edit-id]').val(),
+					'lvl-2-id': lvl_2_id,
+					'edit-lvl-3-code': popover.find('input[name=edit-lvl-3-code]').val(),
+					'edit-lvl-3-name': popover.find('input[name=edit-lvl-3-name]').val(),
+					'edit-lvl-3-bir': popover.find('input[name=edit-lvl-3-bir]').val(),
+				}
+		$.get(window.location.origin+'/setup/setup3/edit_coa_lvl3', data, function(){
+			lvl3.ajax.reload();
+			$('.popover').removeClass('animate');
+			$('.popover').popover('hide');
+	        $('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('#add-lvl-3-btn').click(function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('add-lvl-3-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#add-lvl3-popover').html();
+			},
+			callback: function(){
+				var popover = $('.popover.add-lvl-3-modal');
+				popover.find('select[name=add-coa2-lvl-1]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.add-lvl-3-modal').find('input[name=lvl1_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.add-lvl-3-modal').find('input[name=lvl1_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize1 = $('#add-coa2-lvl-1.selectized').selectize()[0].selectize;
+				selectize1.clear();
+				selectize1.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_1',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_1_name,
+				            value: lvl.lvl_1_id,
+				            code: lvl.lvl_1_code
+			          	});
+					});
+
+					selectize1.clear();
+					selectize1.clearOptions();
+					selectize1.renderCache = {};
+					selectize1.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize1.setValue(lvl_1_id);
+				});
+				popover.find('select[name=add-coa3-lvl-2]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.add-lvl-3-modal').find('input[name=lvl2_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.add-lvl-3-modal').find('input[name=lvl2_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize2 = $('#add-coa3-lvl-2.selectized').selectize()[0].selectize;
+				selectize2.clear();
+				selectize2.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_2',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_2_name,
+				            value: lvl.lvl_2_id,
+				            code: lvl.lvl_2_code
+			          	});
+					});
+
+					selectize2.clear();
+					selectize2.clearOptions();
+					selectize2.renderCache = {};
+					selectize2.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize2.setValue(lvl_2_id);
+				});
+				$('.popover.add-lvl-3-modal').addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl3').on('click', '.edit', function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        var data = lvl3.row(this.closest('tr')).data();
+        $(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('edit-lvl-3-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#edit-lvl3-popover').html();
+			},
+			callback: function(){
+				var popover = $('.popover.edit-lvl-3-modal');
+				popover.find('select[name=edit-coa2-lvl-1]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.edit-lvl-3-modal').find('input[name=lvl1_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.edit-lvl-3-modal').find('input[name=lvl1_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize1 = $('#edit-coa2-lvl-1.selectized').selectize()[0].selectize;
+				selectize1.clear();
+				selectize1.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_1',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_1_name,
+				            value: lvl.lvl_1_id,
+				            code: lvl.lvl_1_code
+			          	});
+					});
+
+					selectize1.clear();
+					selectize1.clearOptions();
+					selectize1.renderCache = {};
+					selectize1.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize1.setValue(lvl_1_id);
+				});
+				popover.find('select[name=edit-coa3-lvl-2]').selectize({
+					create: false,
+					sortField: {
+						field: 'text',
+						direction: 'asc'
+					},
+					dropdownParent: null,
+					onChange: function(value){
+						if($(this)[0].options[value]){
+							$('.edit-lvl-3-modal').find('input[name=lvl2_code]').val($(this)[0].options[value].code);
+						}else{
+							$('.edit-lvl-3-modal').find('input[name=lvl2_code]').val('');
+						}
+					},
+			      	onDropdownClose: function(dropdown){
+			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
+			      	}
+				});
+				var selectize2 = $('#edit-coa3-lvl-2.selectized').selectize()[0].selectize;
+				selectize2.clear();
+				selectize2.clearOptions();
+				$.get(window.location.origin+'/setup/setup3/get_level_2',function(response){
+					var json_data = JSON.parse(response);
+					var selectOptions = [];
+					$.each(json_data, function(index, lvl){
+						selectOptions.push({
+				            text: lvl.lvl_2_name,
+				            value: lvl.lvl_2_id,
+				            code: lvl.lvl_2_code
+			          	});
+					});
+
+					selectize2.clear();
+					selectize2.clearOptions();
+					selectize2.renderCache = {};
+					selectize2.load(function(callback) {
+					    callback(selectOptions);
+					});
+					selectize2.setValue(lvl_2_id);
+				});
+				popover.find('input[name=edit-id]').val(data.lvl_3_id);
+				popover.find('input[name=edit-lvl-3-code]').val(data.lvl_3_code);
+				popover.find('input[name=edit-lvl-3-name]').val(data.lvl_3_name);
+				popover.find('input[name=edit-lvl-3-bir]').val(data.lvl_3_bir);
+				$('.popover.edit-lvl-3-modal').addClass('animate');
+				initRipple();
+		        no_space();
+		        initNumberValidation();
+		        initSingleSubmit();
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+	});
+	$('#coa-lvl3').on('click', '.delete', function(){
+		var data = lvl3.row(this.closest('tr')).data();
+		$.get(window.location.origin+'/setup/setup3/delete_coa_lvl3', {id: data.lvl_3_id}, function(){
+			lvl3.ajax.reload();
+		});
+	});
+
 	$('body').on('click', '#add-lvl-5-submit', function(){
 		var popover = $(this).closest('.popover');
 		var data = {
@@ -658,34 +852,6 @@
 			$('.popover').popover('hide');
 	        $('.card-body button').removeAttr('disabled');
 	        lvl5.ajax.reload();
-		});
-	});
-	$('body').on('click', '#add-lvl-6-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-			'add-lvl-6-name': popover.find('input[name=add-lvl-6-name]').val(),
-			'add-lvl-5': popover.find('select[name=add-lvl-5]').val()
-		}
-		$.get(window.location.origin+'/setup/setup3/add_coa_lvl6', data, function(response){
-			$('.popover').removeClass('animate');
-			$('.popover').popover('hide');
-	        $('.card-body button').removeAttr('disabled');
-	        lvl6.ajax.reload();
-		});
-	});
-	$('body').on('click', '#edit-lvl-6-submit', function(){
-		var popover = $(this).closest('.popover');
-		var data = {
-			'edit-lvl-6-code': popover.find('input[name=edit-lvl-6-code]').val(),
-			'edit-lvl-6-name': popover.find('input[name=edit-lvl-6-name]').val(),
-			'edit-lvl-6-id': popover.find('input[name=edit-lvl-6-id]').val(),
-			'edit-lvl-5': popover.find('select[name=edit-lvl-5]').val()
-		}
-		$.get(window.location.origin+'/setup/setup3/edit_coa_lvl6', data, function(response){
-			$('.popover').removeClass('animate');
-			$('.popover').popover('hide');
-	        $('.card-body button').removeAttr('disabled');
-	        lvl6.ajax.reload();
 		});
 	});
 	$('#add-lvl-5-btn').click(function(){
@@ -840,158 +1006,6 @@
 	        lvl5.ajax.reload();
 		});
 	});
-	$('#add-lvl-6-btn').click(function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('add-lvl-6-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#add-lvl6-popover').html();
-			},
-			callback: function(){
-				$('#add-lvl-5-selectize').selectize({
-					create: false,
-					sortField: {
-						field: 'text',
-						direction: 'asc'
-					},
-					dropdownParent: null,
-					onChange: function(value){
-						if($(this)[0].options[value]){
-							$('.add-lvl-6-modal').find('input[name=lvl-5-code]').val($(this)[0].options[value].code);
-						}else{
-							$('.add-lvl-6-modal').find('input[name=lvl-5-code]').val('');
-						}
-					},
-			      	onDropdownClose: function(dropdown){
-			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
-			      	}
-				});
-				var selectize = $('#add-lvl-5-selectize.selectized').selectize()[0].selectize;
-				selectize.clear();
-				selectize.clearOptions();
-				$.get(window.location.origin+'/setup/setup3/get_level_5',function(response){
-					var data = JSON.parse(response);
-					var selectOptions = [];
-					$.each(data, function(index, lvl){
-						selectOptions.push({
-				            text: lvl.lvl_5_name,
-				            value: lvl.lvl_5_id,
-				            code: lvl.lvl_5_code
-			          	});
-					});
-
-					selectize.clear();
-					selectize.clearOptions();
-					selectize.renderCache = {};
-					selectize.load(function(callback) {
-					    callback(selectOptions);
-					});
-				});
-				$('.add-lvl-6-modal').addClass('animate');
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#coa-lvl6').on('click', '.edit', function(){
-		$('body').on('hidden.bs.popover', function (e) {
-            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
-        });
-        var data = lvl6.row(this.closest('tr')).data();
-		$(this).popover({
-			animation: true,
-			html: true,
-			placement: function(context, src){
-				$(context).addClass('edit-lvl-6-modal');
-				return 'right';
-			},
-			content: function(){
-				return $('#edit-lvl6-popover').html();
-			},
-			callback: function(){
-				$('#edit-lvl-5-selectize').selectize({
-					create: false,
-					sortField: {
-						field: 'text',
-						direction: 'asc'
-					},
-					dropdownParent: null,
-					onChange: function(value){
-						if($(this)[0].options[value]){
-							$('.edit-lvl-6-modal').find('input[name=lvl-5-code]').val($(this)[0].options[value].code);
-						}else{
-							$('.edit-lvl-6-modal').find('input[name=lvl-5-code]').val('');
-						}
-					},
-			      	onDropdownClose: function(dropdown){
-			      		$('.selectize-dropdown [data-selectable] .highlight').removeClass('highlight');
-			      	}
-				});
-				var selectize = $('#edit-lvl-5-selectize.selectized').selectize()[0].selectize;
-				selectize.clear();
-				selectize.clearOptions();
-				$.get(window.location.origin+'/setup/setup3/get_level_5',function(response){
-					var json_data = JSON.parse(response);
-					var selectOptions = [];
-					$.each(json_data, function(index, lvl){
-						selectOptions.push({
-				            text: lvl.lvl_5_name,
-				            value: lvl.lvl_5_id,
-				            code: lvl.lvl_5_code
-			          	});
-					});
-
-					selectize.clear();
-					selectize.clearOptions();
-					selectize.renderCache = {};
-					selectize.load(function(callback) {
-					    callback(selectOptions);
-					});
-					selectize.setValue(data.lvl_5_id);
-				});
-				$('.popover.edit-lvl-6-modal').find('input[name=edit-lvl-6-code]').val(data.lvl_6_code);
-				$('.popover.edit-lvl-6-modal').find('input[name=edit-lvl-6-name]').val(data.lvl_6_name);
-				$('.popover.edit-lvl-6-modal').find('input[name=edit-lvl-6-id]').val(data.lvl_6_id);
-				$('.edit-lvl-6-modal').addClass('animate');
-            },
-            container: 'body'
-		}).on('show.bs.popover', function(){
-            $('.popover').not(this).popover('hide');
-            $('.card-body button').attr('disabled', true);
-        });
-		$(this).popover('toggle');
-        initRipple();
-        no_space();
-        initNumberValidation();
-        initSingleSubmit();
-	});
-	$('#coa-lvl6').on('click', '.delete', function(){
-		var data = lvl6.row(this.closest('tr')).data();
-		var keys = {
-			'lvl_6_id': data.lvl_6_id,
-			'coalvl56_id': data.coalvl56_id
-		}
-		$.get(window.location.origin+'/setup/setup3/delete_coa_lvl6', keys, function(response){
-			$('.popover').removeClass('animate');
-			$('.popover').popover('hide');
-	        $('.card-body button').removeAttr('disabled');
-	        lvl6.ajax.reload();
-		});
-	});
 </script>
 
 <!-- TAX -->
@@ -1045,7 +1059,7 @@
 				return $('#add-tax-popover').html();
 			},
 			callback: function(){
-				$('#add-select-tax-type').selectize({
+				$('.add-tax-modal').find('select[name=add-type]').selectize({
 					create: false,
 					sortField: {
 						field: 'text',
@@ -1108,7 +1122,7 @@
 				return $('#edit-tax-popover').html();
 			},
 			callback: function(){
-				$('#edit-select-tax-type').selectize({
+				$('.edit-tax-modal').find('select[name=edit-type]').selectize({
 					create: false,
 					sortField: {
 						field: 'text',
@@ -1181,6 +1195,113 @@
 			backdrop: 'static',
 			keyboard: false,
 			show: true,
+		});
+	});
+</script>
+
+<script>
+	$('body').on('click', '#add-branch-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'add-branch-name': popover.find('input[name=add-branch-name]').val(),
+					'add-branch-address': popover.find('input[name=add-branch-address]').val(),
+					'add-branch-tin': popover.find('input[name=add-branch-tin]').val(),
+					'add-branch-cno': popover.find('input[name=add-branch-cno]').val(),
+					'add-branch-email': popover.find('input[name=add-branch-email]').val()
+				}
+		$.get(window.location.origin+'/setup/setup1/add_branch', data, function(response){
+			branch_table.ajax.reload();
+			$('.popover').popover('hide');
+       		$('.card-body button').removeAttr('disabled');
+		});
+	});
+	$('body').on('click', '#edit-branch-submit', function(){
+		var popover = $(this).closest('.popover');
+		var data = {
+					'edit-id': popover.find('input[name=edit-id]').val(),
+					'edit-branch-name': popover.find('input[name=edit-branch-name]').val(),
+					'edit-branch-address': popover.find('input[name=edit-branch-address]').val(),
+					'edit-branch-tin': popover.find('input[name=edit-branch-tin]').val(),
+					'edit-branch-cno': popover.find('input[name=edit-branch-cno]').val(),
+					'edit-branch-email': popover.find('input[name=edit-branch-email]').val()
+				}
+		$.get(window.location.origin+'/setup/setup1/edit_branch', data, function(response){
+			branch_table.ajax.reload();
+			$('.popover').popover('hide');
+       		$('.card-body button').removeAttr('disabled');
+		});
+	});
+
+	$('#add-branch-btn').click(function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+		$(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('add-branch-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#add-branch-popover').html();
+			},
+			callback: function(){
+				$('.add-branch-modal').addClass('animate');
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+        initRipple();
+        no_space();
+        initNumberValidation();
+        initSingleSubmit();
+	});
+	$('#branch-table').on('click', '.edit', function(){
+		$('body').on('hidden.bs.popover', function (e) {
+            $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
+        });
+        var data = branch_table.row(this.closest('tr')).data();
+		$(this).popover({
+			animation: true,
+			html: true,
+			placement: function(context, src){
+				$(context).addClass('edit-branch-modal');
+				return 'right';
+			},
+			content: function(){
+				return $('#edit-branch-popover').html();
+			},
+			callback: function(){
+				$('.edit-branch-modal').find('input[name=edit-branch-name]').val(data.cb_name);
+				$('.edit-branch-modal').find('input[name=edit-branch-address]').val(data.cb_address);
+				$('.edit-branch-modal').find('input[name=edit-branch-tin]').val(data.cb_tin);
+				$('.edit-branch-modal').find('input[name=edit-branch-cno]').val(data.cb_cno);
+				$('.edit-branch-modal').find('input[name=edit-branch-email]').val(data.cb_email);
+				$('.edit-branch-modal').find('input[name=edit-id]').val(data.cb_id);
+				$('.edit-branch-modal').addClass('animate');
+            },
+            container: 'body'
+		}).on('show.bs.popover', function(){
+            $('.popover').not(this).popover('hide');
+            $('.card-body button').attr('disabled', true);
+        });
+		$(this).popover('toggle');
+        initRipple();
+        no_space();
+        initNumberValidation();
+        initSingleSubmit();
+	});
+	$('#branch-table').on('click', '.delete', function(){
+		var cb_id = branch_table.row(this.closest('tr')).data().cb_id;
+		var cbbr_id = branch_table.row(this.closest('tr')).data().cbbr_id;
+		$.get(window.location.origin+'/setup/setup1/delete_branch', {cb_id: cb_id, cbbr_id: cbbr_id}, function(response){
+			branch_table.ajax.reload();
+			$('.popover').popover('hide');
+       		$('.card-body button').removeAttr('disabled');
 		});
 	});
 </script>

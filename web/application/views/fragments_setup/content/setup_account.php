@@ -58,7 +58,7 @@
 										<li id='setup-1' setup-title='Company Profile' class='setup-1'>
 											<div class='content'> 
 												<div class="row">
-													<div class='col-xs-12' style="margin-top: 20px; padding: 20px 0;">
+													<div class='col-xs-12' style="border-top: 1px solid rgb(232, 232, 232); margin-top: 20px; padding: 20px 0;">
 														<h3 style="text-align: left; font-size: 16px; font-weight: bold; margin-bottom: 25px;"><i class='fa fa-caret-right'></i>&nbsp; Profile</h3>
 														<div class='col-md-12'>
 															<table id='profile-table' class='table table-bordered' style="width: 100%;">
@@ -110,15 +110,17 @@
 														<h3 style="text-align: left; font-size: 16px; font-weight: bold; margin-bottom: 25px;"><i class='fa fa-caret-right'></i>&nbsp; Users</h3>
 														<div class='col-md-12'>
 															<button id='add-user-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add User' style="float: left;">Add</button>
-															<table id='users-table' class='table table-bordered' style="width: 100%;">
+															<table id='users-table' class='table table-bordered' style="width: 120%;">
 																<thead>
 																	<th style="width: 45px;"></th>
+																	<th>Sequence</th>
 																	<th>Name</th>
 																	<th>Address</th>
 																	<th>Contact Number</th>
 																	<th>Email Address</th>
 																	<th>Branch</th>
 																	<th>Username</th>
+																	<th>Access Level</th>
 																	<th>Validity Date</th>
 																</thead>
 															</table>
@@ -154,7 +156,7 @@
 										<li id='setup-3' setup-title='Chart of Accounts' class='setup-2'>
 											<div class='content' style='width: 96%;'> 
 												<div class="row">
-													<div class='col-md-12'>
+													<div class='col-md-12' style="border-top: 1px solid #E8E8E8; margin-top: 20px; padding: 20px 0;">
 														<div class='row'>
 															<div id='coa-tab-1' class='coa-tab active'>
 																<button type='button' class='btn btn-default btn-sm btn-flat ripple-effect btn-seq seq-selected set-1'>
@@ -181,11 +183,19 @@
 																	<span>Level 5</span>
 																</button>
 															</div>
-															<div id='coa-tab-6' class='coa-tab'>
+															<!-- <div id='coa-tab-6' class='coa-tab'>
 																<button type='button' class='btn btn-default btn-sm btn-flat ripple-effect btn-seq set-6'>
 																	<span>Level 6</span>
 																</button>
-															</div>
+															</div> -->
+														</div>
+														<div style="min-width: 100px; float: left;">
+															<ol id='coa-breadcrumb' class='breadcrumb'>
+																<li><a href="#">...</a></li>
+																<li><a href="#">...</a></li>
+																<li><a href="#">...</a></li>
+																<li><a href="#">...</a></li>
+															</ol>
 														</div>
 													</div>
 													<div class='col-md-12' style='min-height: 300px; margin-bottom: 10px;'>
@@ -193,59 +203,89 @@
 															<div id='coa-seq'>
 																<ul class='seq-canvas'>
 																	<li>
-																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
+																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
+																			<button id='add-lvl-1-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 																			<table id='coa-lvl1' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th>Code</th>
-																					<th>Name</th>
+																					<th></th>
+																					<th>Level 1 Code</th>
+																					<th>Level 1 Name</th>
 																				</thead>
 																			</table>
 																		</div>
 																	</li>
 																	<li>
-																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
+																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
+																			<div id='lvl-2-alert' class='col-md-12'>
+																				<span class='alert alert-danger coa-alert'>Please select level 1</span>
+																			</div>
+																			<button id='add-lvl-2-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl2' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th>Code</th>
-																					<th>Name</th>
+																					<th></th>
+																					<th>Level 1 Code</th>
+																					<th>Level 2 Code</th>
+																					<th>Level 2 Name</th>
 																				</thead>
 																			</table>
 																		</div>
 																	</li>
 																	<li>
-																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
+																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
+																			<div id='lvl-3-alert' class='col-md-12'>
+																				<span class='alert alert-danger coa-alert'>Please select level 2</span>
+																			</div>
+																			<button id='add-lvl-3-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl3' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th>Code</th>
-																					<th>Name</th>
+																					<th></th>
+																					<th>Level 1 Code</th>
+																					<th>Level 2 Code</th>
+																					<th>Level 3 Code</th>
+																					<th>Level 3 Name</th>
 																					<th>BIR</th>
 																				</thead>
 																			</table>
 																		</div>
 																	</li>
 																	<li>
-																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
+																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
+																			<div id='lvl-4-alert' class='col-md-12'>
+																				<span class='alert alert-danger coa-alert'>Please select level 3</span>
+																			</div>
+																			<button id='add-lvl-4-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl4' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th>Code</th>
-																					<th>Name</th>
+																					<th></th>
+																					<th>Level 1 Code</th>
+																					<th>Level 2 Code</th>
+																					<th>Level 3 Code</th>
+																					<th>Level 4 Code</th>
+																					<th>Level 4 Name</th>
 																				</thead>
 																			</table>
 																		</div>
 																	</li>
 																	<li>
-																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
-																			<button id='add-lvl-5-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
+																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
+																			<div id='lvl-5-alert' class='col-md-12'>
+																				<span class='alert alert-danger coa-alert'>Please select level 4</span>
+																			</div>
+																			<button id='add-lvl-5-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl5' class='table table-bordered' style="width: 100%;">
 																				<thead>
 																					<th></th>
-																					<th>Code</th>
-																					<th>Name</th>
+																					<th>Level 1 Code</th>
+																					<th>Level 2 Code</th>
+																					<th>Level 3 Code</th>
+																					<th>Level 4 Code</th>
+																					<th>Level 5 Code</th>
+																					<th>Level 5 Name</th>
 																				</thead>
 																			</table>
 																		</div>
 																	</li>
-																	<li>
+																	<!-- <li>
 																		<div class='col-md-8 col-md-offset-2' style='margin-top: 25px;'>
 																			<button id='add-lvl-6-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 																			<table id='coa-lvl6' class='table table-bordered' style="width: 100%;">
@@ -256,7 +296,7 @@
 																				</thead>
 																			</table>
 																		</div>
-																	</li>
+																	</li> -->
 																</ul>
 															</div>
 														</div>
@@ -275,7 +315,7 @@
 										<li id='setup-4' setup-title='Taxes' class='setup-2'>
 											<div class='content'> 
 												<div class="row">
-													<div class='col-md-12'>
+													<div class='col-md-12' style="border-top: 1px solid #E8E8E8; margin-top: 20px; padding: 20px 0;">
 														<button id='add-tax-btn' type='button' class='btn btn-info btn-sm btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 														<table id='tax' class='table table-bordered' style="width: 100%;">
 															<thead>
@@ -333,7 +373,7 @@
 </div>
 
 <div id='edit-profile-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Profile</h4>
 	</div>
@@ -384,13 +424,13 @@
 			</tr>
 		</table>
 	</div>
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-profile-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='submit' style='float: right;'>OK</button>
 	</div>
 </div>
 
 <div id='add-user-account-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add User Account</h4>
 	</div>
@@ -434,12 +474,12 @@
 		</table>
 	</div>
 	<input id='add_p_id' type="hidden" name="add-p-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='add-user-account-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='submit' style='float: right;'>OK</button>
 	</div>
 </div>
 <div id='edit-user-account-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit User Account</h4>
 	</div>
@@ -483,14 +523,14 @@
 		</table>
 	</div>
 	<input id='edit_u_id' type="hidden" name="edit-u-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-user-account-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='submit' style='float: right;'>OK</button>
 	</div>
 </div>
 
 
 <div id='add-user-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add User</h4>
 	</div>
@@ -551,12 +591,12 @@
 			</tr>
 		</table>
 	</div>
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='add-user-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
-<div id='edit-employee-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+<div id='edit-user-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit User</h4>
 	</div>
@@ -576,26 +616,56 @@
 			</tr>
 			<tr>
 				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Address</label></td>
-				<td style='padding-top: 5px;'><input class='form-control' type='text' name='edit-emp-address' required></td>
+				<td style='padding-top: 5px;'><input class='form-control' type='text' name='edit-user-address' required></td>
 			</tr>
 			<tr>
 				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Mobile No.</label></td>
-				<td style='padding-top: 5px;'><input class='form-control number' type='text' name='edit-emp-cno' required></td>
+				<td style='padding-top: 5px;'><input class='form-control number' type='text' name='edit-user-cno' required></td>
 			</tr>
 			<tr>
 				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Email</label></td>
-				<td style='padding-top: 5px;'><input class='form-control' type='text' name='edit-emp-email' required></td>
+				<td style='padding-top: 5px;'><input class='form-control' type='text' name='edit-user-email' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Branch</label></td>
+				<td style='padding-top: 5px;'>
+					<select name='edit-user-branch' placeholder='Select...' required>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 150px; text-align: right; padding-right: 20px;'><label>Access Level</label></td>
+				<td>
+					<select name='edit-user-access-level' required>
+						<option value='Super Admin'>Super Admin</option>
+						<option value='Admin'>Admin</option>
+						<option value='User'>User</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 150px; text-align: right; padding-right: 20px;'><label>Username</label></td>
+				<td><input class='form-control' type='text' name='edit-user-username' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Password</label></td>
+				<td style='padding-top: 5px;'><input class='form-control' type='password' name='edit-user-password' required readonly></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 150px; text-align: right; padding-right: 20px;'><label>Validity Date</label></td>
+				<td style='padding-top: 5px;'><input class='form-control' type='date' name='edit-user-validity-date' required></td>
 			</tr>
 		</table>
 	</div>
-	<input type="hidden" name="edit-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
-		<button id='edit-employee-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	<input type="hidden" name="edit-profile-id">
+	<input type="hidden" name="edit-user-id">
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='edit-user-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
 
 <div id='add-branch-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Branch</h4>
 	</div>
@@ -623,12 +693,12 @@
 			</tr>
 		</table>
 	</div>
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='add-branch-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
 <div id='edit-branch-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Branch</h4>
 	</div>
@@ -657,13 +727,195 @@
 		</table>
 	</div>
 	<input type="hidden" name="edit-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-branch-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
 
+<div id='add-lvl1-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 1</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='add-lvl-1-name' required></td>
+			</tr>
+		</table>
+	</div>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='add-lvl-1-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+<div id='edit-lvl1-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Level 1</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Code</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='edit-lvl-1-code' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='edit-lvl-1-name' required></td>
+			</tr>
+		</table>
+	</div>
+	<input type="hidden" name='edit-id'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='edit-lvl-1-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+
+<div id='add-lvl2-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 2</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 10px; width: 150px; text-align: right; padding-right: 20px;'><label>Level 1</label></td>
+				<td style='width: 45px;'><input id='add-coa2-lvl1-code' class='form-control' type="text" name="lvl1_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td style='padding-top: 5px;'>
+					<select id='add-coa2-lvl-1' name='add-coa2-lvl-1' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2'><input class='form-control' type='text' name='add-lvl-2-name' required></td>
+			</tr>
+		</table>
+	</div>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='add-lvl-2-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+<div id='edit-lvl2-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Level 2</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 10px; width: 150px; text-align: right; padding-right: 20px;'><label>Level 1</label></td>
+				<td style='width: 45px;'><input id='edit-coa2-lvl1-code' class='form-control' type="text" name="lvl1_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td style='padding-top: 5px;'>
+					<select id='edit-coa2-lvl-1' name='edit-coa2-lvl-1' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 100px; text-align: right; padding-right: 20px;'><label>Code</label></td>
+				<td colspan='2'><input class='form-control' type='text' name='edit-lvl-2-code' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='edit-lvl-2-name' required></td>
+			</tr>
+		</table>
+	</div>
+	<input type="hidden" name="edit-id">
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='edit-lvl-2-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+
+<div id='add-lvl3-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 3</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 10px; width: 150px; text-align: right; padding-right: 20px;'><label>Level 1</label></td>
+				<td style='width: 45px;'><input id='add-coa2-lvl1-code' class='form-control' type="text" name="lvl1_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td style='padding-top: 5px;'>
+					<select id='add-coa2-lvl-1' name='add-coa2-lvl-1' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 150px; text-align: right; padding-right: 20px;'><label>Level 2</label></td>
+				<td class='code-display' style='width: 45px;'><input id='add-coa3-lvl2-code' class='form-control' type="text" name="lvl2_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td>
+					<select id='add-coa3-lvl-2' name='add-coa3-lvl-2' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2'><input class='form-control' type='text' name='add-lvl-3-name' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>BIR</label></td>
+				<td colspan='2' style="padding-top: 5px;"><input class='form-control' type='text' name='add-lvl-3-bir' required></td>
+			</tr>
+		</table>
+	</div>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='add-lvl-3-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+<div id='edit-lvl3-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Level 3</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 10px; width: 150px; text-align: right; padding-right: 20px;'><label>Level 1</label></td>
+				<td style='width: 45px;'><input id='edit-coa2-lvl1-code' class='form-control' type="text" name="lvl1_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td style='padding-top: 5px;'>
+					<select id='edit-coa2-lvl-1' name='edit-coa2-lvl-1' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 150px; text-align: right; padding-right: 20px;'><label>Level 2</label></td>
+				<td class='code-display' style='width: 45px;'><input id='edit-coa3-lvl2-code' class='form-control' type="text" name="lvl2_code" style="width: 100%; text-align: center; height: 32px;" readonly></td>
+				<td>
+					<select id='edit-coa3-lvl-2' name='edit-coa3-lvl-2' required disabled>
+						<option value="">Select...</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style='width: 100px; text-align: right; padding-right: 20px;'><label>Code</label></td>
+				<td colspan='2'><input class='form-control' type='text' name='edit-lvl-3-code' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style="padding-top: 5px;"><input class='form-control' type='text' name='edit-lvl-3-name' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>BIR</label></td>
+				<td colspan='2' style="padding-top: 5px;"><input class='form-control' type='text' name='edit-lvl-3-bir' required></td>
+			</tr>
+		</table>
+	</div>
+	<input type="hidden" name="edit-id">
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='edit-lvl-3-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+
 <div id='add-lvl5-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 5</h4>
 	</div>
@@ -687,12 +939,12 @@
 			
 		</table>
 	</div>
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='add-lvl-5-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
 <div id='edit-lvl5-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Level 5</h4>
 	</div>
@@ -721,12 +973,76 @@
 		</table>
 	</div>
 	<input type="hidden" name="edit-lvl-5-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-lvl-5-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
 </div>
 
-<div id='add-lvl6-popover' class='modal fade' role='dialog' tabindex='-1'>
+<div id='add-lvl5-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 5</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='add-lvl-5-name' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Level 4</label></td>
+				<td style='padding-top: 5px;'>
+					<select id='add-lvl-4-selectize' type='text' name='add-lvl-4' required>
+						<option value="">Select...</option>
+					</select>
+				</td>
+				<td style="width: 80px;">
+					<input class='form-control' type="text" name="lvl-4-code" style='height: 32px;' disabled>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='add-lvl-5-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+<div id='edit-lvl5-popover' class='modal fade' role='dialog' tabindex='-1'>
+	<div style='height: 30px; padding-bottom: 10px;'>
+		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
+		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Level 5</h4>
+	</div>
+	<div class='modal-body body'>
+		<table width='90%'>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Code</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='edit-lvl-5-code' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Name</label></td>
+				<td colspan='2' style='padding-top: 5px;'><input class='form-control' type='text' name='edit-lvl-5-name' required></td>
+			</tr>
+			<tr>
+				<td style='padding-top: 5px; width: 100px; text-align: right; padding-right: 20px;'><label>Level 5</label></td>
+				<td style='padding-top: 5px;'>
+					<select id='edit-lvl-4-selectize' type='text' name='edit-lvl-4' required>
+						<option value="">Select...</option>
+					</select>
+				</td>
+				<td style="width: 80px;">
+					<input class='form-control' type="text" name="lvl-4-code" style='height: 32px;' disabled>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	<input type="hidden" name="edit-lvl-5-id">
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
+		<button id='edit-lvl-5-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
+	</div>
+</div>
+
+<!-- <div id='add-lvl6-popover' class='modal fade' role='dialog' tabindex='-1'>
 	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Level 6</h4>
@@ -788,10 +1104,10 @@
 	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-lvl-6-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>OK</button>
 	</div>
-</div>
+</div> -->
 
 <div id='add-tax-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Add Tax</h4>
 	</div>
@@ -823,12 +1139,12 @@
 			</tr>
 		</table>
 	</div>
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='add-tax-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>Ok</button>
 	</div>
 </div>
 <div id='edit-tax-popover' class='modal fade' role='dialog' tabindex='-1'>
-	<div style='border-bottom: 1px groove; height: 30px; padding-bottom: 10px;'>
+	<div style='height: 30px; padding-bottom: 10px;'>
 		<button class='close close-popover' type='button' data-dismiss='modal' style='padding-right: 10px;'><span aria-hidden='true'>&times;</span></button>
 		<h4 class='modal-title' style="font-family: 'Roboto Condensed', sans-serif;">Edit Tax</h4>
 	</div>
@@ -865,7 +1181,7 @@
 		</table>
 	</div>
 	<input type="hidden" name="edit-t-id">
-	<div class='modal-footer' style='border-top: 1px inset; padding-top: 5px; padding-bottom: 0px;'>
+	<div class='modal-footer' style='padding-top: 5px; padding-bottom: 0px;'>
 		<button id='edit-tax-submit' class='btn btn-info btn-sm btn-raised ripple-effect' type='button' style='float: right;'>Ok</button>
 	</div>
 </div>

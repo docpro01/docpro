@@ -255,6 +255,12 @@
 	.dataTables_filter .label{
 		margin: 0 !important;
 	}
+	.dataTables_wrapper .top{
+		margin: 0;
+	}
+	table.dataTable{
+		margin-top: 0 !important;
+	}
 </style>
 <style>
 	.popover{
@@ -273,8 +279,8 @@
 	}
 	.popover *{
 		opacity: 0;
-		transition: opacity 0.8s;
-		-webkit-transition: opacity 0.8s;
+		transition: opacity 1.5s;
+		-webkit-transition: opacity 1.5s;
 	}
 	.popover.animate{
 		width: 500px;
@@ -283,7 +289,7 @@
 	.popover.animate *{
 		opacity: 1;
 	}
-	.app-container .popover-content > div:first-child{
+	.popover-content > div:first-child{
 		border-bottom: 1px solid #C1C1C1 !important;
 	}
 	.app-container .popover-content .modal-footer{
@@ -315,6 +321,7 @@
 	.popover .modal-footer{
 		background-color: #e8e8e8;
 		width: 100%;
+		border-top: 1px solid #C1C1C1 !important;
 	}
 
 	.popover .modal-body, 
@@ -403,6 +410,28 @@
 	.selectize-dropdown-content{
 		text-align: center;
 	}
+	.selectize-control .selectize-input.disabled{
+		opacity: 1 !important;
+		background-color: #EEE;
+	}
+	.popover.add-lvl-1-modal .modal-body{
+		height: 70px;
+	}
+	.popover.edit-lvl-1-modal .modal-body{
+		height: 110px;
+	}
+	.popover.add-lvl-2-modal .modal-body{
+		height: 108px;
+	}
+	.popover.edit-lvl-2-modal .modal-body{
+		height: 145px;
+	}
+	.popover.add-lvl-3-modal .modal-body{
+		height: 184px;
+	}
+	.popover.edit-lvl-3-modal .modal-body{
+		height: 223px;
+	}
 </style>
 <style>
 	::-webkit-input-placeholder {
@@ -426,7 +455,7 @@
 <style>
 	.coa-tab{
 		float: left;
-		width: 16.5%;
+		width: 20%;
 	}
 	.coa-tab button{
 		width: 100%;
@@ -438,7 +467,7 @@
 		background-color: #000 !important;
 	}
 	#coa-seq{
-		min-height: 515px;
+		min-height: 610px;
 	}
 </style>
 
@@ -446,9 +475,39 @@
 	.dataTable thead th, .dataTable thead td{
 		color: #000;
 	}
+	.dataTable tr.selected{
+		background-color: #E8E8E8 !important;
+	}
+	#coa-lvl1 tr,
+	#coa-lvl2 tr,
+	#coa-lvl3 tr,
+	#coa-lvl4 tr
+	{
+		cursor: pointer;
+		cursor: hand;
+	}
+	#coa-breadcrumb{
+		border-left: 3px solid #000;
+		border-radius: 0;
+	}
+	.coa-alert{
+		background-color: #f9e0e0 !important;
+		border-left: 3px solid red !important;
+		color: red !important;
+		float: left;
+	}
+	.code-display .form-group{
+		margin-top: -3px !important;
+	}
 </style>
 <style>
 	.selectize-input{
 		text-align: left !important;
+	}
+	.popover button{
+		padding-top: 4px !important;
+	}
+	table.dataTable button{
+		padding-top: 2px !important;
 	}
 </style>

@@ -78,7 +78,7 @@
 		<link href='<?php echo base_url(); ?>assets/css/background_img.css' rel='stylesheet' type='text/css'>
 	</head>
 
-	<body class="flat-blue" style="opacity: 0;">
+	<body class="flat-blue">
 		<div id='app-container' class="app-container">
 			<div class="row content-container">
 				<nav class="navbar navbar-default navbar-fixed-top navbar-top">
@@ -794,7 +794,7 @@
 		<?php if(isset($footer_js)){ $this->load->view($footer_js); } ?>
 
 		<!-- ZOOM -->
-		<script src="<?php echo base_url(); ?>/assets/js/zoom.js"></script>
+		<!-- <script src="<?php echo base_url(); ?>/assets/js/zoom.js"></script> -->
 	</body>
 
 </html>

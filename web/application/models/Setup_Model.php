@@ -152,6 +152,16 @@ class Setup_Model extends CI_Model{
         self::$db->insert('users', $user);
     }
 
+    public static function edit_user($profile, $user, $p_id, $u_id){
+        self::$db->where('p_id', $p_id)->update('profiles', $profile);
+        self::$db->where('u_id', $u_id)->update('users', $user);
+    }
+
+    public static function delete_user($p_id, $u_id){
+        self::$db->where('p_id', $p_id)->delete('profiles');
+        self::$db->where('u_id', $u_id)->delete('users');
+    }
+
     public static function get_branches($cb_id){
         return self::$db->from('cb_br cbbr')->join('company_branches cb', 'cbbr.br_id=cb.cb_id')->where('cbbr.cb_id', $cb_id)->where('cbbr.br_id !=', $cb_id)->get()->result();
     }
@@ -190,23 +200,88 @@ class Setup_Model extends CI_Model{
     }
 
     public static function get_coa_lvl1($cb_id){
-        return self::$db->from('coa_lvl_1 coa1')->join('co_coa_lvl1 cocoa1', 'coa1.lvl_1_id=cocoa1.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+        return self::$db->from('coa_lvl_1 coa1')->join('co_coa_lvl1 cocoa1', 'coa1.lvl_1_id=cocoa1.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->where('coa1.flag', '1')->get()->result();
     }
 
-    public static function get_coa_lvl2($cb_id){
-        return self::$db->from('coa_lvl_2 coa2')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    public static function add_coa_lvl1($data, $user){
+        $last_record = self::$db->query("SELECT * FROM coa_lvl_1 coa1 JOIN co_coa_lvl1 cocoa1 ON cocoa1.lvl_1_id=coa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa1.flag='1' ORDER BY CAST(coa1.lvl_1_code AS DECIMAL) DESC LIMIT 1")->result();
+        $code = count($last_record) > 0 ? (floatval($last_record[0]->lvl_1_code) + 1).'' : '0';
+        $data['lvl_1_code'] = $code;
+        self::$db->insert('coa_lvl_1', $data);
+        $lvl_1_id = self::$db->insert_id();
+        self::$db->insert('co_coa_lvl1', ['cb_id' => $user->cb_id, 'lvl_1_id' => $lvl_1_id]);
     }
 
-    public static function get_coa_lvl3($cb_id){
-        return self::$db->from('coa_lvl_3 coa3')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    public static function edit_coa_lvl1($data, $id, $user){
+        self::$db->query("UPDATE coa_lvl_1 coa1 SET coa1.lvl_1_code='' WHERE coa1.lvl_1_id IN (SELECT lvl_1_id FROM (SELECT coa1.lvl_1_id FROM coa_lvl_1 coa1 JOIN co_coa_lvl1 cocoa1 ON coa1.lvl_1_id=cocoa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa1.lvl_1_code='".$data['lvl_1_code']."') t) AND coa1.flag='1'");
+        self::$db->where('lvl_1_id', $id)->update('coa_lvl_1', $data);
     }
 
-    public static function get_coa_lvl4($cb_id){
-        return self::$db->from('coa_lvl_4 coa4')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    public static function delete_coa_lvl1($id){
+        self::$db->where('lvl_1_id', $id)->update('coa_lvl_1', ['flag' => '0']);
     }
 
-    public static function get_coa_lvl5($cb_id){
-        return self::$db->from('coa_lvl_5 coa5')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    public static function get_coa_lvl2($lvl_1_id, $cb_id){
+        return self::$db->from('coa_lvl_2 coa2')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where(['cocoa1.cb_id' => $cb_id, 'cocoa1.lvl_1_id' => $lvl_1_id, 'coa2.flag' => '1'])->get()->result();
+    }
+
+    public static function get_level_1($user){
+        return self::$db->from('coa_lvl_1 coa1')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa1.lvl_1_id')->where(['cocoa1.cb_id' => $user->cb_id, 'coa1.flag' => '1'])->get()->result();
+    }
+
+    public static function add_coa_lvl2($data, $lvl_1_id, $user){
+        $last_record = self::$db->query("SELECT * FROM coa_lvl_2 coa2 JOIN coalvl_1_2 coa12 ON coa12.lvl_2_id=coa2.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON cocoa1.lvl_1_id=coa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa1.lvl_1_id='".$lvl_1_id."' AND coa2.flag='1' ORDER BY CAST(coa2.lvl_2_code AS DECIMAL) DESC LIMIT 1")->result();
+        $code = count($last_record) > 0 ? (floatval($last_record[0]->lvl_2_code) + 1).'' : '0';
+        $data['lvl_2_code'] = $code;
+        self::$db->insert('coa_lvl_2', $data);
+        $lvl_2_id = self::$db->insert_id();
+        self::$db->insert('coalvl_1_2', ['lvl_1_id' => $lvl_1_id, 'lvl_2_id' => $lvl_2_id]);
+    }
+
+    public static function edit_coa_lvl2($data, $lvl_1_id, $id, $user){
+        self::$db->query("UPDATE coa_lvl_2 coa2 SET coa2.lvl_2_code='' WHERE coa2.lvl_2_id IN (SELECT lvl_2_id FROM (SELECT coa2.lvl_2_id FROM coa_lvl_2 coa2 JOIN coalvl_1_2 coa12 ON coa2.lvl_2_id=coa12.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON coa1.lvl_1_id=cocoa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa2.lvl_2_code='".$data['lvl_2_code']."' AND coa1.lvl_1_id='".$lvl_1_id."') t) AND coa2.flag='1'");
+        self::$db->where('lvl_2_id', $id)->update('coa_lvl_2', $data);
+    }
+
+    public static function delete_coa_lvl3($id){
+        self::$db->where('lvl_3_id', $id)->update('coa_lvl_3', ['flag' => '0']);
+    }
+
+    public static function delete_coa_lvl2($id){
+        self::$db->where('lvl_2_id', $id)->update('coa_lvl_2', ['flag' => '0']);
+    }
+
+    public static function get_level_2($user){
+        return self::$db->from('coa_lvl_2 coa2')->join('coalvl_1_2 coa12', 'coa12.lvl_2_id=coa2.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa1.lvl_1_id')->where(['cocoa1.cb_id' => $user->cb_id, 'coa2.flag' => '1'])->get()->result();
+    }
+
+    public static function add_coa_lvl3($data, $lvl_2_id, $user){
+        $last_record = self::$db->query("SELECT * FROM coa_lvl_3 coa3 JOIN coalvl_2_3 coa23 ON coa23.lvl_3_id=coa3.lvl_3_id JOIN coa_lvl_2 coa2 ON coa2.lvl_2_id=coa23.lvl_2_id JOIN coalvl_1_2 coa12 ON coa12.lvl_2_id=coa2.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON cocoa1.lvl_1_id=coa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa2.lvl_2_id='".$lvl_2_id."' AND coa3.flag='1' ORDER BY CAST(coa3.lvl_3_code_int AS DECIMAL) DESC LIMIT 1")->result();
+        $code_int = count($last_record) > 0 ? (floatval($last_record[0]->lvl_3_code_int) + 1).'' : '0';
+        $code = strlen($code_int) === 1 ? '0'.$code_int : $code_int;
+        $data['lvl_3_code_int'] = $code_int;
+        $data['lvl_3_code'] = $code;
+        self::$db->insert('coa_lvl_3', $data);
+        $lvl_3_id = self::$db->insert_id();
+        self::$db->insert('coalvl_2_3', ['lvl_2_id' => $lvl_2_id, 'lvl_3_id' => $lvl_3_id]);
+    }
+
+    public static function edit_coa_lvl3($data, $lvl_2_id, $id, $user){
+        self::$db->query("UPDATE coa_lvl_3 coa3 SET coa3.lvl_3_code='', coa3.lvl_3_code_int='' WHERE coa3.lvl_3_id IN (SELECT lvl_3_id FROM (SELECT coa3.lvl_3_id FROM coa_lvl_3 coa3 JOIN coalvl_2_3 coa23 ON coa23.lvl_3_id=coa3.lvl_3_id JOIN coa_lvl_2 coa2 ON coa2.lvl_2_id=coa23.lvl_2_id JOIN coalvl_1_2 coa12 ON coa2.lvl_2_id=coa12.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON coa1.lvl_1_id=cocoa1.lvl_1_id WHERE cocoa1.cb_id='".$user->cb_id."' AND coa3.lvl_3_code='".$data['lvl_3_code']."' AND coa2.lvl_2_id='".$lvl_2_id."') t) AND coa3.flag='1'");
+
+        self::$db->where('lvl_3_id', $id)->update('coa_lvl_3', $data);
+    }
+
+    public static function get_coa_lvl3($lvl_2_id, $cb_id){
+        return self::$db->from('coa_lvl_3 coa3')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where(['cocoa1.cb_id' => $cb_id, 'coa2.lvl_2_id' => $lvl_2_id, 'coa3.flag' => '1'])->get()->result();
+    }
+
+    public static function get_coa_lvl4($lvl_3_id, $cb_id){
+        return self::$db->from('coa_lvl_4 coa4')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where(['cocoa1.cb_id' => $cb_id, 'coa3.lvl_3_id' => $lvl_3_id, 'coa4.flag' => '1'])->get()->result();
+    }
+
+    public static function get_coa_lvl5($lvl_4_id, $cb_id){
+        return self::$db->from('coa_lvl_5 coa5')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where(['cocoa1.cb_id' => $cb_id, 'coa4.lvl_4_id' => $lvl_4_id, 'coa5.flag' => '1'])->get()->result();
     }
 
     public static function add_coa_lvl5($data){
@@ -229,38 +304,38 @@ class Setup_Model extends CI_Model{
         self::$db->where('coalvl45_id', $data['coalvl45_id'])->delete('coalvl_4_5');
     }
 
-    public static function get_coa_lvl6($cb_id){
-        // return self::$db->from('coa_lvl_6 coa6')->join('coalvl_5_6 coa56', 'coa6.lvl_6_id=coa56.lvl_6_id')->join('coa_lvl_5 coa5', 'coa5.lvl_5_id=coa56.lvl_5_id')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
-        return '';
-    }
+    // public static function get_coa_lvl6($cb_id){
+    //     // return self::$db->from('coa_lvl_6 coa6')->join('coalvl_5_6 coa56', 'coa6.lvl_6_id=coa56.lvl_6_id')->join('coa_lvl_5 coa5', 'coa5.lvl_5_id=coa56.lvl_5_id')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    //     return '';
+    // }
 
-    public static function add_coa_lvl6($data){
-        $last_record = self::$db->query("SELECT * FROM coa_lvl_6 coa6 JOIN coalvl_5_6 coa56 ON coa6.lvl_6_id=coa56.lvl_6_id JOIN coa_lvl_5 coa5 ON coa5.lvl_5_id=coa56.lvl_5_id JOIN coalvl_4_5 coa45 ON coa45.lvl_5_id=coa5.lvl_5_id JOIN coa_lvl_4 coa4 ON coa4.lvl_4_id=coa45.lvl_4_id JOIN coalvl_3_4 coa34 ON coa4.lvl_4_id=coa34.lvl_4_id JOIN coa_lvl_3 coa3 ON coa3.lvl_3_id=coa34.lvl_3_id JOIN coalvl_2_3 coa23 ON coa23.lvl_3_id=coa3.lvl_3_id JOIN coa_lvl_2 coa2 ON coa2.lvl_2_id=coa23.lvl_2_id JOIN coalvl_1_2 coa12 ON coa2.lvl_2_id=coa12.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON cocoa1.lvl_1_id=coa12.lvl_1_id WHERE cocoa1.cb_id='".$data['cb_id']."' AND coa5.lvl_5_id='".$data['lvl_5_id']."' ORDER BY CAST(coa6.lvl_6_code AS DECIMAL) DESC LIMIT 1")->result();
+    // public static function add_coa_lvl6($data){
+    //     $last_record = self::$db->query("SELECT * FROM coa_lvl_6 coa6 JOIN coalvl_5_6 coa56 ON coa6.lvl_6_id=coa56.lvl_6_id JOIN coa_lvl_5 coa5 ON coa5.lvl_5_id=coa56.lvl_5_id JOIN coalvl_4_5 coa45 ON coa45.lvl_5_id=coa5.lvl_5_id JOIN coa_lvl_4 coa4 ON coa4.lvl_4_id=coa45.lvl_4_id JOIN coalvl_3_4 coa34 ON coa4.lvl_4_id=coa34.lvl_4_id JOIN coa_lvl_3 coa3 ON coa3.lvl_3_id=coa34.lvl_3_id JOIN coalvl_2_3 coa23 ON coa23.lvl_3_id=coa3.lvl_3_id JOIN coa_lvl_2 coa2 ON coa2.lvl_2_id=coa23.lvl_2_id JOIN coalvl_1_2 coa12 ON coa2.lvl_2_id=coa12.lvl_2_id JOIN coa_lvl_1 coa1 ON coa1.lvl_1_id=coa12.lvl_1_id JOIN co_coa_lvl1 cocoa1 ON cocoa1.lvl_1_id=coa12.lvl_1_id WHERE cocoa1.cb_id='".$data['cb_id']."' AND coa5.lvl_5_id='".$data['lvl_5_id']."' ORDER BY CAST(coa6.lvl_6_code AS DECIMAL) DESC LIMIT 1")->result();
 
-        $code = count($last_record) > 0 ? (floatval($last_record[0]->lvl_6_code) + 1).'' : '0';
-        self::$db->insert('coa_lvl_6', ['lvl_6_code' => $code, 'lvl_6_name' => $data['lvl_6_name'], 'lvl_6_company' => $data['lvl_6_company'], 'lvl_6_setup_company' => $data['lvl_6_setup_company']]);
-        $lvl_6_id = self::$db->insert_id();
-        self::$db->insert('coalvl_5_6', ['lvl_5_id' => $data['lvl_5_id'], 'lvl_6_id' => $lvl_6_id]);
+    //     $code = count($last_record) > 0 ? (floatval($last_record[0]->lvl_6_code) + 1).'' : '0';
+    //     self::$db->insert('coa_lvl_6', ['lvl_6_code' => $code, 'lvl_6_name' => $data['lvl_6_name'], 'lvl_6_company' => $data['lvl_6_company'], 'lvl_6_setup_company' => $data['lvl_6_setup_company']]);
+    //     $lvl_6_id = self::$db->insert_id();
+    //     self::$db->insert('coalvl_5_6', ['lvl_5_id' => $data['lvl_5_id'], 'lvl_6_id' => $lvl_6_id]);
         
-    }
+    // }
 
-    public static function edit_coa_lvl6($data){
-        self::$db->where('lvl_6_id', $data['lvl_6_id'])->update('coa_lvl_6', ['lvl_6_code' => $data['lvl_6_code'], 'lvl_6_name' => $data['lvl_6_name']]);
-        self::$db->where('lvl_6_id', $data['lvl_6_id'])->update('coalvl_5_6', ['lvl_5_id' => $data['lvl_5_id']]);
-    }
+    // public static function edit_coa_lvl6($data){
+    //     self::$db->where('lvl_6_id', $data['lvl_6_id'])->update('coa_lvl_6', ['lvl_6_code' => $data['lvl_6_code'], 'lvl_6_name' => $data['lvl_6_name']]);
+    //     self::$db->where('lvl_6_id', $data['lvl_6_id'])->update('coalvl_5_6', ['lvl_5_id' => $data['lvl_5_id']]);
+    // }
 
-    public static function delete_coa_lvl6($data){
-        self::$db->where('lvl_6_id', $data['lvl_6_id'])->delete('coa_lvl_6');
-        self::$db->where('coalvl56_id', $data['coalvl56_id'])->delete('coalvl_5_6');
-    }
+    // public static function delete_coa_lvl6($data){
+    //     self::$db->where('lvl_6_id', $data['lvl_6_id'])->delete('coa_lvl_6');
+    //     self::$db->where('coalvl56_id', $data['coalvl56_id'])->delete('coalvl_5_6');
+    // }
 
     public static function get_level_4($cb_id){
         return self::$db->from('coa_lvl_4 coa4')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
     }
 
-    public static function get_level_5($cb_id){
-        return self::$db->from('coa_lvl_5 coa5')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
-    }
+    // public static function get_level_5($cb_id){
+    //     return self::$db->from('coa_lvl_5 coa5')->join('coalvl_4_5 coa45', 'coa45.lvl_5_id=coa5.lvl_5_id')->join('coa_lvl_4 coa4', 'coa4.lvl_4_id=coa45.lvl_4_id')->join('coalvl_3_4 coa34', 'coa4.lvl_4_id=coa34.lvl_4_id')->join('coa_lvl_3 coa3', 'coa3.lvl_3_id=coa34.lvl_3_id')->join('coalvl_2_3 coa23', 'coa23.lvl_3_id=coa3.lvl_3_id')->join('coa_lvl_2 coa2', 'coa2.lvl_2_id=coa23.lvl_2_id')->join('coalvl_1_2 coa12', 'coa2.lvl_2_id=coa12.lvl_2_id')->join('coa_lvl_1 coa1', 'coa1.lvl_1_id=coa12.lvl_1_id')->join('co_coa_lvl1 cocoa1', 'cocoa1.lvl_1_id=coa12.lvl_1_id')->where('cocoa1.cb_id', $cb_id)->get()->result();
+    // }
 
     public static function get_tax($cb_id){
         return self::$db->from('taxes t')->join('co_taxes ct', 'ct.t_id=t.t_id')->join('tax_types tt', 'tt.tt_id=t.tt_id')->get()->result();
