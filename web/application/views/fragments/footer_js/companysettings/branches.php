@@ -1,21 +1,21 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/branch_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/branch_seq.js"></script> -->
 <script>
     $(document).ready(function(){
-        var table_summary = $('#branches-summary-table').DataTable({
-            ajax: window.location.origin+'/company_settings/branches/get',
-             columns:[ 
-                {'data': 'ch_cb_name'}, 
-                {'data': 'ch_cb_address'}, 
-                {'data': 'ch_cb_tin'},
-                {'data': 'ch_cb_tax_type'},
-                {'data': 'ch_cb_cno'},
-                {'data': 'ch_cb_email'},
-            ],
-            scrollX: true,
-            initComplete: function(settings, json){
-                initRipple();
-            }
-        });
+        // var table_summary = $('#branches-summary-table').DataTable({
+        //     ajax: window.location.origin+'/company_settings/branches/get',
+        //      columns:[ 
+        //         {'data': 'ch_cb_name'}, 
+        //         {'data': 'ch_cb_address'}, 
+        //         {'data': 'ch_cb_tin'},
+        //         {'data': 'ch_cb_tax_type'},
+        //         {'data': 'ch_cb_cno'},
+        //         {'data': 'ch_cb_email'},
+        //     ],
+        //     scrollX: true,
+        //     initComplete: function(settings, json){
+        //         initRipple();
+        //     }
+        // });
         var table = $('#branches-table').DataTable({
             ajax: window.location.origin+'/company_settings/branches/get',
             columns:[
@@ -178,5 +178,8 @@
             $('.popover').popover('hide');
             $('.card-body button').removeAttr('disabled');
         });
+
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(table, $(this).closest('side-body'));
     });
 </script>

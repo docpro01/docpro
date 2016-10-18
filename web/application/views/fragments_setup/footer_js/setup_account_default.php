@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/setup.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_setup/datatables.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_setup/datatables_default.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_setup/nav_tabs.js"></script>
 
 <script type="text/javascript">
@@ -2204,10 +2204,4 @@
 	// 		});
 	// 	}
 	// }
-</script>
-
-<script>
-	$('#btn-fin').click(function(){
-		window.location = window.location.origin+'/setup/setup4/finish_setup';
-	});
 </script>

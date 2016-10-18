@@ -41,11 +41,12 @@
                                         <button type=button class='btn btn-danger btn-xs btn-raised delete title' custom-title='Delete'><i class='fa fa-times'></i></button>";
                             }
                         },
+						{'data': 'lvl_1_seq'},
 						{'data': 'lvl_1_code'},
 						{'data': 'lvl_1_name'},
 					],
-			columnDefs: [{targets: 0, width: '100px'}, {targets: 1, width: '100px'}],
-			order: [['1', 'asc']],
+			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2], width: '100px'}],
+			order: [['2', 'asc']],
 			bLengthChange: false,
 			fnDrawCallback: function(oSettings) {
 				$.each(oSettings.aoData, function(index, data){
@@ -73,12 +74,13 @@
                                         <button type=button class='btn btn-danger btn-xs btn-raised delete title' custom-title='Delete'><i class='fa fa-times'></i></button>";
                             }
                         },
+						{'data': 'lvl_2_seq'},
 						{'data': 'lvl_1_code'},
 						{'data': 'lvl_2_code'},
 						{'data': 'lvl_2_name'},
 					],
-			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2], width: '100px'}],
-			order: [['1', 'asc']],
+			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2,3], width: '100px'}],
+			order: [['3', 'asc']],
 			bLengthChange: false,
 			fnDrawCallback: function(oSettings) {
 				$.each(oSettings.aoData, function(index, data){
@@ -88,6 +90,7 @@
 				});
 			},
 			initComplete: function(){
+				$('#lvl-2-plate').css('opacity', '1');
 				initRipple();
 				init_tooltip();
 			}
@@ -98,7 +101,7 @@
                         {
                             mData: null, bSortable: false, bSearchable: false,
                             mRender: function(data, type, full){
-                            	if(full.lvl_3_code_int+'' === '0'){
+                            	if(full.lvl_2_code+'' === '0'){
                             		return '';
                             	}
                                	return "<button type='button' class='btn btn-primary btn-xs btn-raised view title' custom-title='View'><i class='fa fa-eye'></i></button>\n\
@@ -106,14 +109,15 @@
                                         <button type=button class='btn btn-danger btn-xs btn-raised delete title' custom-title='Delete'><i class='fa fa-times'></i></button>";
                             }
                         },
+						{'data': 'lvl_3_seq'},
 						{'data': 'lvl_1_code'},
 						{'data': 'lvl_2_code'},
 						{'data': 'lvl_3_code'},
 						{'data': 'lvl_3_name'},
 						{'data': 'lvl_3_bir'}
 					],
-			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2,3], width: '100px'}],
-			order: [['1', 'asc']],
+			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2,3,4], width: '100px'}],
+			order: [['4', 'asc']],
 			bLengthChange: false,
 			fnDrawCallback: function(oSettings) {
 				$.each(oSettings.aoData, function(index, data){
@@ -123,6 +127,7 @@
 				});
 			},
 			initComplete: function(){
+				$('#lvl-3-plate').css('opacity', '1');
 				initRipple();
 				init_tooltip();
 			}
@@ -141,14 +146,15 @@
                                         <button type=button class='btn btn-danger btn-xs btn-raised delete title' custom-title='Delete'><i class='fa fa-times'></i></button>";
                             }
                         },
+						{'data': 'lvl_4_seq'},
 						{'data': 'lvl_1_code'},
 						{'data': 'lvl_2_code'},
 						{'data': 'lvl_3_code'},
 						{'data': 'lvl_4_code'},
 						{'data': 'lvl_4_name'},
 					],
-			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2,3,4], width: '100px'}],
-			order: [['1', 'asc']],
+			columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2,3,4,5], width: '100px'}],
+			order: [['5', 'asc']],
 			bLengthChange: false,
 			fnDrawCallback: function(oSettings) {
 				// $.each(oSettings.aoData, function(index, data){
@@ -158,6 +164,7 @@
 				// });
 			},
 			initComplete: function(){
+				$('#lvl-4-plate').css('opacity', '1');
 				initRipple();
 				init_tooltip();
 			}
@@ -203,14 +210,27 @@
 				init_tooltip();
 			}
 		});
-		if(lvl_1_id === 0){
+		
+		if(lvl_1_id === 0 || isNaN(lvl_1_id)){
 			$('#add-acc-classification').attr('disabled', true);
+			$('#lvl-2-alert').css('display', 'block');
+		}else{
+			$('#add-acc-classification').removeAttr('disabled');
+			$('#lvl-2-alert').css('display', 'none');
 		}
-		if(lvl_2_id === 0){
+		if(lvl_2_id === 0 || isNaN(lvl_2_id)){
 			$('#add-line-items').attr('disabled', true);
+			$('#lvl-3-alert').css('display', 'block');
+		}else{
+			$('#add-line-items').removeAttr('disabled');
+			$('#lvl-3-alert').css('display', 'none');
 		}
-		if(lvl_3_id === 0){
+		if(lvl_3_id === 0 || isNaN(lvl_3_id)){
 			$('#add-acc-sub').attr('disabled', true);
+			$('#lvl-4-alert').css('display', 'block');
+		}else{
+			$('#add-acc-sub').removeAttr('disabled');
+			$('#lvl-4-alert').css('display', 'none');
 		}
 
 		var init_breadcrumb = function(){
@@ -222,22 +242,51 @@
 		}
 		init_breadcrumb();
 		
-		var reload_tables = function(){
-			acc_classification.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_2/'+lvl_1_id).load(function(){disable_button();});
-			line_items.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_3/'+lvl_2_id).load(function(){disable_button();});
-			account_subclassification.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_4/'+lvl_3_id).load(function(){disable_button();});
-			if(lvl_1_id === 0){
+		var reload_tables = function(table){
+			if(table === 1){
+				$('#lvl-2-plate').css('opacity', '0');
+				$('#lvl-3-plate').css('opacity', '0');
+				$('#lvl-4-plate').css('opacity', '0');
+			}
+			if(table === 2){
+				$('#lvl-3-plate').css('opacity', '0');
+				$('#lvl-4-plate').css('opacity', '0');
+			}
+			if(table === 3){
+				$('#lvl-4-plate').css('opacity', '0');
+			}
+			acc_classification.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_2/'+lvl_1_id).load(function(){
+				disable_button();
+				$('#lvl-2-plate').css('opacity', '1');
+			});
+			line_items.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_3/'+lvl_2_id).load(function(){
+				disable_button();
+				$('#lvl-3-plate').css('opacity', '1');
+			});
+			account_subclassification.ajax.url(window.location.origin+'/docpro_setup/chart_of_accounts/reload_lvl_4/'+lvl_3_id).load(function(){
+				disable_button();
+				$('#lvl-4-plate').css('opacity', '1');
+			});
+			if(lvl_1_id === 0 || isNaN(lvl_1_id)){
 				$('#add-acc-classification').attr('disabled', true);
+				$('#lvl-2-alert').css('display', 'block');
 			}else{
 				$('#add-acc-classification').removeAttr('disabled');
+				$('#lvl-2-alert').css('display', 'none');
 			}
-			if(lvl_2_id === 0){
+			if(lvl_2_id === 0 || isNaN(lvl_2_id)){
 				$('#add-line-items').attr('disabled', true);
+				$('#lvl-3-alert').css('display', 'block');
+			}else{
 				$('#add-line-items').removeAttr('disabled');
+				$('#lvl-3-alert').css('display', 'none');
 			}
-			if(lvl_3_id === 0){
+			if(lvl_3_id === 0 || isNaN(lvl_3_id)){
 				$('#add-acc-sub').attr('disabled', true);
+				$('#lvl-4-alert').css('display', 'block');
+			}else{
 				$('#add-acc-sub').removeAttr('disabled');
+				$('#lvl-4-alert').css('display', 'none');
 			}
 		}
 
@@ -253,7 +302,7 @@
 			lvl_3_id = 0;
 			lvl_2_name = '';
 			lvl_3_name = '';
-			reload_tables();
+			reload_tables(1);
 			init_breadcrumb();
 		});
 
@@ -266,7 +315,7 @@
 			lvl_3_code = 0;
 			lvl_3_id = 0;
 			lvl_3_name = '';
-			reload_tables();
+			reload_tables(2);
 			init_breadcrumb();
 		});
 
@@ -276,7 +325,7 @@
 			lvl_3_code = line_items.row($(this)).data().lvl_3_code;
 			lvl_3_id = line_items.row($(this)).data().lvl_3_id;
 			lvl_3_name = line_items.row($(this)).data().lvl_3_name;
-			reload_tables();
+			reload_tables(3);
 			init_breadcrumb();
 		});
 

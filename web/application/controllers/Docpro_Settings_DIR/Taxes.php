@@ -4,8 +4,11 @@ class Taxes extends CI_Controller{
         parent::__construct();
         if(!$this->session->userdata('logged_in')){redirect('login', 'refresh');}
     }
-    public function get(){
-        echo json_encode(array('data' => Taxes_Model::get()));
+    public function get($slug){
+        echo json_encode(array('data' => Taxes_Model::get($slug)));
+    }
+    public function get_tax_types(){
+        echo json_encode(Taxes_Model::get_tax_types());
     }
     public function add(){
         $data = array(

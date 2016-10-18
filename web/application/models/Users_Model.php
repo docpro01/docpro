@@ -30,7 +30,7 @@ class Users_Model extends CI_Model {
         //     $user = self::$db->from('users')->where('users.u_name =', $username)->join('profiles', 'profiles.p_id = users.p_id')->join('company_branches', 'company_branches.cb_id = profiles.cb_id')->join('business_partners_type', 'business_partners_type.bpt_id = company_branches.bpt_id')->join('co_registrant', 'co_registrant.cb_id = company_branches.cb_id')->get();
         // }
 
-        $user = self::$db->from('users u')->where('u.u_name =', $username)->join('profiles p', 'p.p_id = u.p_id')->join('cb_br cbbr', 'cbbr.cbbr_id=u.cbbr_id')->join('company_branches cb', 'cb.cb_id = cbbr.br_id')->join('company_history ch', 'ch.ch_cb_id=cb.cb_id')->join('co_registrant coreg', 'coreg.cb_id = cb.cb_id')->where('ch.flag', '1')->get();
+        $user = self::$db->from('users u')->where('u.u_name =', $username)->join('profiles p', 'p.p_id = u.p_id')->join('cb_br cbbr', 'cbbr.cbbr_id=u.cbbr_id')->join('company_branches cb', 'cb.cb_id = cbbr.br_id')->join('company_history ch', 'ch.ch_cb_id=cb.cb_id')->join('co_registrant coreg', 'coreg.cb_id = cb.cb_id')->where(['ch.flag' => '1', 'cb.flag' => '1'])->get();
 
         if($user->num_rows() > 0){
             $user = $user->result()[0];

@@ -43,7 +43,7 @@ class Company_Settings extends MY_Controller{
         
 	public function get_taxes(){
 		$seq_active = $this->session->flashdata('seq_active') ? $this->session->flashdata('seq_active') : '1';
-		$this->load->view($this->layout, ['head_css'=>'fragments/head_css/companysettings/taxes', 'top_navbar'=>'fragments/top_navbar/global_top_navbar', 'content'=>'fragments/content/companysettings/taxes', 'footer_js'=>'fragments/footer_js/companysettings/taxes', 'back_button'=>'../company_settings', 'active_nav'=>'companysettings', 'taxes'=>Taxes_Model::get(), 'sess_data'=>$this->session->userdata('logged_in'), 'seq_active' => $seq_active]);
+		$this->load->view($this->layout, ['head_css'=>'fragments/head_css/companysettings/taxes', 'top_navbar'=>'fragments/top_navbar/global_top_navbar', 'content'=>'fragments/content/companysettings/taxes', 'footer_js'=>'fragments/footer_js/companysettings/taxes', 'back_button'=>'../company_settings', 'active_nav'=>'companysettings', 'taxes'=>[]/**Taxes_Model::get()**/, 'sess_data'=>$this->session->userdata('logged_in'), 'seq_active' => $seq_active]);
 	}
         
 	public function get_business_partners(){

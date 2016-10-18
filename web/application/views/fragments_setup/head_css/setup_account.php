@@ -270,6 +270,7 @@
 		background-color: #e8e8e8;
 		box-shadow: 10px;
 		width: 500px;
+		padding: 0 !important;
 	}
 	.popover{
 		opacity: 0;
@@ -327,19 +328,19 @@
 	.popover .modal-body, 
 	.popover .col-md-4
 	{
-		height: 230px;
+		height: 197px;
 	}
 	.popover.add-user-modal .modal-body,
 	.popover.edit-user-modal .modal-body
 	{
-		height: 452px;
+		height: 395px;
 	}
 
 	.popover.edit-profile-modal.animate{
 		width: 500px;
 	}
 	.popover.edit-profile-modal .modal-body{
-		height: 305px;
+		height: 263px;
 	}
 	.popover.add-lvl-5-modal .modal-body,
 	.popover.add-lvl-6-modal .modal-body
@@ -353,11 +354,11 @@
 	}
 	.popover.add-tax-modal .modal-body
 	{
-		height: 215px;
+		height: 191px;
 	}
 	.popover.edit-tax-modal .modal-body
 	{
-		height: 250px;
+		height: 223px;
 	}
 
 	.popover .modal-body{
@@ -418,19 +419,37 @@
 		height: 70px;
 	}
 	.popover.edit-lvl-1-modal .modal-body{
-		height: 110px;
+		height: 99px;
 	}
 	.popover.add-lvl-2-modal .modal-body{
-		height: 108px;
+		height: 97px;
 	}
 	.popover.edit-lvl-2-modal .modal-body{
-		height: 145px;
+		height: 130px;
 	}
 	.popover.add-lvl-3-modal .modal-body{
-		height: 184px;
+		height: 165px;
 	}
 	.popover.edit-lvl-3-modal .modal-body{
-		height: 223px;
+		height: 197px;
+	}
+	.popover.add-lvl-4-modal .modal-body{
+		height: 163px;
+	}
+	.popover.edit-lvl-4-modal .modal-body{
+		height: 197px;
+	}
+	.popover.add-lvl-5-modal .modal-body{
+		height: 197px;
+	}
+	.popover.edit-lvl-5-modal .modal-body{
+		height: 230px;
+	}
+	.popover.add-tax-types-modal .modal-body{
+		height: 97px;
+	}
+	.popover.edit-tax-types-modal .modal-body{
+		height: 125px;
 	}
 </style>
 <style>
@@ -451,7 +470,7 @@
 	}
 </style>
 
-<!-- COA TAB -->
+<!-- COA N' TAX TAB -->
 <style>
 	.coa-tab{
 		float: left;
@@ -459,14 +478,30 @@
 	}
 	.coa-tab button{
 		width: 100%;
-		padding: 20px 0;
-		font-size: 11px;
+		padding: 14px 0;
+		font-size: 9px;
 	}
 	.coa-tab.active button{
 		color: #FFF !important;
 		background-color: #000 !important;
 	}
 	#coa-seq{
+		min-height: 610px;
+	}
+	.tax-tab{
+		float: left;
+		width: 50%;
+	}
+	.tax-tab button{
+		width: 100%;
+		padding: 14px 0;
+		font-size: 9px;
+	}
+	.tax-tab.active button{
+		color: #FFF !important;
+		background-color: #000 !important;
+	}
+	#tax-seq{
 		min-height: 610px;
 	}
 </style>
@@ -486,9 +521,12 @@
 		cursor: pointer;
 		cursor: hand;
 	}
-	#coa-breadcrumb{
+	#coa-breadcrumb,
+	#tax-breadcrumb
+	{
 		border-left: 3px solid #000;
 		border-radius: 0;
+		margin: 0;
 	}
 	.coa-alert{
 		background-color: #f9e0e0 !important;
@@ -498,6 +536,12 @@
 	}
 	.code-display .form-group{
 		margin-top: -3px !important;
+	}
+</style>
+<style>
+	#tax-types tr{
+		cursor: hand;
+		cursor: pointer;
 	}
 </style>
 <style>

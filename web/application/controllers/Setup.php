@@ -8,10 +8,14 @@ class Setup extends MY_Controller{
 	}
 	
 	public function index(){
-        return $this->load->view($this->layout, ['user' => $this->session->userdata('user'), 'content' => 'fragments_setup/content/welcome']);
+        return $this->load->view($this->layout, ['user' => $this->session->userdata('user'), 'content' => 'fragments_setup/content/welcome', 'footer_js' => 'fragments_setup/footer_js/welcome']);
 	}
 
     public function setup_account(){
+        $setup_type = $this->input->get('setup_type');
+        if($setup_type === 'default'){
+            return $this->load->view($this->layout, ['head_css' => 'fragments_setup/head_css/setup_account', 'content' => 'fragments_setup/content/setup_account_default', 'footer_js' => 'fragments_setup/footer_js/setup_account_default', 'user' => $this->session->userdata('user')]);
+        }
         return $this->load->view($this->layout, ['head_css' => 'fragments_setup/head_css/setup_account', 'content' => 'fragments_setup/content/setup_account', 'footer_js' => 'fragments_setup/footer_js/setup_account', 'user' => $this->session->userdata('user')]);
     }
 
@@ -106,7 +110,7 @@ class Setup extends MY_Controller{
     }
 
     public function get_users(){
-        echo json_encode(['data' => Setup_Model::get_users($this->session->userdata('user')->cb_id, $this->session->userdata('user')->p_id)]);
+        echo json_encode(['data' => Setup_Model::get_users($this->session->userdata('user'))]);
     }
 
     public function get_branch_list(){
@@ -240,14 +244,14 @@ class Setup extends MY_Controller{
     public function get_coa_lvl6(){
         echo json_encode(['data' => Setup_Model::get_coa_lvl6($this->session->userdata('user')->cb_id)]);
     }
-    public function get_level_4(){
-        echo json_encode(Setup_Model::get_level_4($this->session->userdata('user')->cb_id));
-    }
+    // public function get_level_4(){
+    //     echo json_encode(Setup_Model::get_level_4($this->session->userdata('user')->cb_id));
+    // }
     public function get_level_5(){
         echo json_encode(Setup_Model::get_level_5($this->session->userdata('user')->cb_id));
     }
-    public function get_tax(){
-        echo json_encode(['data' => Setup_Model::get_tax($this->session->userdata('user')->cb_id)]);
+    public function get_tax($slug){
+        echo json_encode(['data' => Setup_Model::get_tax($slug, $this->session->userdata('user'))]);
     }
     public function add_tax(){
         $data = [
@@ -274,7 +278,7 @@ class Setup extends MY_Controller{
             't_company' => 'company',
             't_setup_company' => 'company'
         ];
-        Setup_Model::edit_tax($data);
+        Setup_Model::edit_tax($data, $this->session->userdata('user'));
     }
     public function delete_tax(){
         $data = [
@@ -283,8 +287,33 @@ class Setup extends MY_Controller{
         ];
         Setup_Model::delete_tax($data);
     }
+
+
+    public function get_tax_types_list(){
+        echo json_encode(Setup_Model::get_tax_types_list($this->session->userdata('user')));
+    }
     public function get_tax_types(){
-        echo json_encode(Setup_Model::get_tax_types());
+        echo json_encode(['data' => Setup_Model::get_tax_types($this->session->userdata('user'))]);
+    }
+    public function add_tax_types(){
+        $data = [
+                    'tt_name' => $this->input->get('add-name'),
+                    'tt_shortname' => $this->input->get('add-shortname'),
+                    'tt_company' => 'company'
+                ];
+        Setup_Model::add_tax_types($data, $this->session->userdata('user'));
+    }
+    public function edit_tax_types(){
+        $data = [
+                    'tt_code' => $this->input->get('edit-code'),
+                    'tt_name' => $this->input->get('edit-name'),
+                    'tt_shortname' => $this->input->get('edit-shortname')
+                ];
+        $edit_id = $this->input->get('edit-tt-id');
+        Setup_Model::edit_tax_types($data, $edit_id, $this->session->userdata('user'));
+    }
+    public function delete_tax_types(){
+        Setup_Model::delete_tax_types($this->input->get('id'));
     }
 
     public function add_coa_lvl1(){
@@ -364,6 +393,66 @@ class Setup extends MY_Controller{
     public function delete_coa_lvl3(){
         Setup_Model::delete_coa_lvl3($this->input->get('id'));
     }
+
+    public function get_level_3(){
+        echo json_encode(Setup_Model::get_level_3($this->session->userdata('user')));
+    }
+
+    public function add_level_4(){
+        $data = [
+                    'lvl_4_name' => $this->input->get('add-lvl-4-name'),
+                    'lvl_4_company' => 'company',
+                    'lvl_4_setup_company' => 'company'
+                ];
+        Setup_Model::add_level_4($data, $this->input->get('lvl-3-id'), $this->session->userdata('user'));
+    }
+
+    public function edit_level_4(){
+        $data = [
+                    'lvl_4_code' => $this->input->get('edit-lvl-4-code'),
+                    'lvl_4_name' => $this->input->get('edit-lvl-4-name')
+                ];
+        $lvl_3_id = $this->input->get('lvl-3-id');
+        $edit_id = $this->input->get('edit-id');
+        Setup_Model::edit_level_4($data, $lvl_3_id, $edit_id, $this->session->userdata('user'));
+    }
+
+    public function delete_level_4(){
+        Setup_Model::delete_level_4($this->input->get('id'));
+    }
+
+    public function get_level_4(){
+        echo json_encode(Setup_Model::get_level_4($this->session->userdata('user')));
+    }
+
+    public function add_level_5(){
+        $data = [
+                    'lvl_5_name' => $this->input->get('lvl-5-name'),
+                    'lvl_5_company' => 'company',
+                    'lvl_5_setup_company' => 'company'
+                ];
+        Setup_Model::add_level_5($data, $this->input->get('lvl-4-id'), $this->session->userdata('user'));
+    }
+
+    public function edit_level_5(){
+        $data = [
+                    'lvl_5_code' => $this->input->get('edit-lvl-5-code'),
+                    'lvl_5_name' => $this->input->get('edit-lvl-5-name')
+                ];
+        $lvl_4_id = $this->input->get('lvl-4-id');
+        $edit_id = $this->input->get('edit-id');
+        Setup_Model::edit_level_5($data, $lvl_4_id, $edit_id, $this->session->userdata('user'));
+    }
+
+    public function delete_level_5(){
+        Setup_Model::delete_level_5($this->input->get('id'));
+    }
+
+    public function finish_setup(){
+        redirect('logout');
+    }
+
+// OLD
 
     public function add_coa_lvl5(){
         $data = [

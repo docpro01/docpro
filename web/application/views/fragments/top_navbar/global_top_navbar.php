@@ -37,7 +37,7 @@
 									<i class='fa fa-calendar'></i><span id='date'></span>
 								</a>
 							</li>
-							<li class='dropdown' style='float: left; text-align: right; border-right: 1px solid #E8E8E8;'>
+							<li class='dropdown' style='float: left; text-align: right;'>
 								<h4 id='company-name' style='font-size: 10px; font-weight: bold; word-wrap: break-word; margin-right: 20px; height: 25px;'>
 									<?php 
 										if(isset($this->session->userdata('user')->company_name)){

@@ -186,10 +186,8 @@
 																<ul class='seq-canvas'>
 																	<li>
 																		<div class='col-md-12' style='margin-top: 25px; opacity: 0; padding-left: 10px; padding-right: 10px;'>
-																			<button id='add-lvl-1-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 																			<table id='coa-lvl1' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Level 1 Code</th>
 																					<th>Level 1 Name</th>
@@ -202,10 +200,8 @@
 																			<div id='lvl-2-alert' class='col-md-12'>
 																				<span class='alert alert-danger coa-alert'>Please select level 1</span>
 																			</div>
-																			<button id='add-lvl-2-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl2' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Level 1 Code</th>
 																					<th>Level 2 Code</th>
@@ -219,10 +215,8 @@
 																			<div id='lvl-3-alert' class='col-md-12'>
 																				<span class='alert alert-danger coa-alert'>Please select level 2</span>
 																			</div>
-																			<button id='add-lvl-3-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl3' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Level 1 Code</th>
 																					<th>Level 2 Code</th>
@@ -238,10 +232,8 @@
 																			<div id='lvl-4-alert' class='col-md-12'>
 																				<span class='alert alert-danger coa-alert'>Please select level 3</span>
 																			</div>
-																			<button id='add-lvl-4-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl4' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Level 1 Code</th>
 																					<th>Level 2 Code</th>
@@ -257,10 +249,8 @@
 																			<div id='lvl-5-alert' class='col-md-12'>
 																				<span class='alert alert-danger coa-alert'>Please select level 4</span>
 																			</div>
-																			<button id='add-lvl-5-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;' disabled>Add</button>
 																			<table id='coa-lvl5' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Level 1 Code</th>
 																					<th>Level 2 Code</th>
@@ -320,10 +310,8 @@
 																<ul class='seq-canvas'>
 																	<li style="padding-right: 7px;">
 																		<div class='col-md-12'>
-																			<button id='add-tax-types-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 																			<table id='tax-types' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Code</th>
 																					<th>Name</th>
@@ -334,10 +322,8 @@
 																	</li>
 																	<li>
 																		<div class='col-md-12' style="opacity: 0;">
-																			<button id='add-tax-btn' type='button' class='btn btn-info btn-xs btn-raised ripple-effect' style='float: left; z-index: 9999999;'>Add</button>
 																			<table id='tax' class='table table-bordered' style="width: 100%;">
 																				<thead>
-																					<th></th>
 																					<th>Seq</th>
 																					<th>Code</th>
 																					<th>Name</th>

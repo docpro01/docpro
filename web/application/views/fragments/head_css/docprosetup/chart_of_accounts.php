@@ -327,3 +327,11 @@
 		padding: 0;
 	}
 </style>
+<style>
+	.coa-alert{
+	    background-color: #f9e0e0 !important;
+	    border-left: 3px solid red !important;
+	    color: red !important;
+	    float: left;
+	}
+</style>

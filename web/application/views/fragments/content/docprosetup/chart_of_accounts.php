@@ -45,9 +45,9 @@
 						</div> -->
 					</div>
 					<div class='row'>
-						<input type="hidden" name="default_lvl_1_id" value="<?php echo isset($lvl_1_id) ? $lvl_1_id : '0'; ?>">
-						<input type="hidden" name="default_lvl_2_id" value="<?php echo isset($lvl_2_id) ? $lvl_2_id : '0'; ?>">
-						<input type="hidden" name="default_lvl_3_id" value="<?php echo isset($lvl_3_id) ? $lvl_3_id : '0'; ?>">
+						<input type="hidden" name="default_lvl_1_id" value="<?php echo isset($lvl_1_id) && strlen($lvl_1_id) > 0 ? $lvl_1_id : '0'; ?>">
+						<input type="hidden" name="default_lvl_2_id" value="<?php echo isset($lvl_2_id) && strlen($lvl_2_id) > 0 ? $lvl_2_id : '0'; ?>">
+						<input type="hidden" name="default_lvl_3_id" value="<?php echo isset($lvl_3_id) && strlen($lvl_3_id) > 0 ? $lvl_3_id : '0'; ?>">
 						<input type="hidden" name="default_lvl_1_code" value="<?php echo isset($lvl_1_code) ? $lvl_1_code : '0'; ?>">
 						<input type="hidden" name="default_lvl_2_code" value="<?php echo isset($lvl_2_code) ? $lvl_2_code : '0'; ?>">
 						<input type="hidden" name="default_lvl_3_code" value="<?php echo isset($lvl_3_code) ? $lvl_3_code : '0'; ?>">
@@ -61,6 +61,7 @@
 									<table id='account-elements' class='table table-bordered' width="100%">
 										<thead>
 											<th></th>
+											<th>Seq</th>
 											<th>Level 1 Code</th>
 											<th>Account Element</th>
 										</thead>
@@ -68,46 +69,64 @@
 									<button type="button" class='btn btn-default ripple-effect set-2' style="float: right;">NEXT</button>
 								</li>
 								<li class="<?php if($seq_active === '2') echo $seq_active; ?>">
-									<button id='add-acc-classification' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add'><i class='fa fa-plus'></i></button>
-									<table id='account-classification' class='table table-bordered'>
-										<thead>
-											<th></th>
-											<th>Level 1 Code</th>
-											<th>Level 2 Code</th>
-											<th>Account Classification</th>
-										</thead>
-									</table>
-									<button type="button" class='btn btn-default ripple-effect set-1' style="float: left;">PREV</button>
-									<button type="button" class='btn btn-default ripple-effect set-3' style="float: right;">NEXT</button>
+									<div id='lvl-2-alert' class='col-md-12' style="padding: 0;">
+										<div class='alert alert-danger coa-alert'>Please select level 1</div>
+									</div>
+									<div id='lvl-2-plate' class='col-md-12' style="padding: 0; opacity: 0; padding-left: 3px;">
+										<button id='add-acc-classification' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add' style="float: left;" disabled><i class='fa fa-plus'></i></button>
+										<table id='account-classification' class='table table-bordered'>
+											<thead>
+												<th></th>
+												<th>Seq</th>
+												<th>Level 1 Code</th>
+												<th>Level 2 Code</th>
+												<th>Account Classification</th>
+											</thead>
+										</table>
+										<button type="button" class='btn btn-default ripple-effect set-1' style="float: left;">PREV</button>
+										<button type="button" class='btn btn-default ripple-effect set-3' style="float: right;">NEXT</button>
+									</div>
 								</li>
 								<li class="<?php if($seq_active === '3') echo 'seq-in'; ?>">
-									<button id='add-line-items' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add'><i class='fa fa-plus'></i></button>
-									<table id='line-items' class='table table-bordered'>
-										<thead>
-											<th></th>
-											<th>Level 1 Code</th>
-											<th>Level 2 Code</th>
-											<th>Level 3 Code</th>
-											<th>Line Items</th>
-											<th>BIR</th>
-										</thead>
-									</table>
-									<button type="button" class='btn btn-default ripple-effect set-2' style="float: left;">PREV</button>
-									<button type="button" class='btn btn-default ripple-effect set-4' style="float: right;">NEXT</button>
+									<div id='lvl-3-alert' class='col-md-12' style="padding: 0;">
+										<div class='alert alert-danger coa-alert'>Please select level 2</div>
+									</div>
+									<div id='lvl-3-plate' class='col-md-12' style="padding: 0; opacity: 0; padding-left: 3px;">
+										<button id='add-line-items' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add' style="float: left;" disabled><i class='fa fa-plus'></i></button>
+										<table id='line-items' class='table table-bordered'>
+											<thead>
+												<th></th>
+												<th>Seq</th>
+												<th>Level 1 Code</th>
+												<th>Level 2 Code</th>
+												<th>Level 3 Code</th>
+												<th>Line Items</th>
+												<th>BIR</th>
+											</thead>
+										</table>
+										<button type="button" class='btn btn-default ripple-effect set-2' style="float: left;">PREV</button>
+										<button type="button" class='btn btn-default ripple-effect set-4' style="float: right;">NEXT</button>
+									</div>
 								</li>
 								<li class="<?php if($seq_active === '4') echo 'seq-in'; ?>">
-									<button id='add-acc-sub' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add'><i class='fa fa-plus'></i></button>
-									<table id='account-subclassification' class='table table-bordered'>
-										<thead>
-											<th></th>
-											<th>Level 1 Code</th>
-											<th>Level 2 Code</th>
-											<th>Level 3 Code</th>
-											<th>Level 4 Code</th>
-											<th>Account Subclassification</th>
-										</thead>
-									</table>
-									<button type="button" class='btn btn-default ripple-effect set-3' style="float: left;">PREV</button>
+									<div id='lvl-4-alert' class='col-md-12' style="padding: 0;">
+										<div class='alert alert-danger coa-alert'>Please select level 3</div>
+									</div>
+									<div id='lvl-4-plate' class='col-md-12' style="padding: 0; opacity: 0; padding-left: 3px;">
+										<button id='add-acc-sub' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add' style="float: left;" disabled><i class='fa fa-plus'></i></button>
+										<table id='account-subclassification' class='table table-bordered'>
+											<thead>
+												<th></th>
+												<th>Seq</th>
+												<th>Level 1 Code</th>
+												<th>Level 2 Code</th>
+												<th>Level 3 Code</th>
+												<th>Level 4 Code</th>
+												<th>Account Subclassification</th>
+											</thead>
+										</table>
+										<button type="button" class='btn btn-default ripple-effect set-3' style="float: left;">PREV</button>
+									</div>
 								</li>
 								<!-- <li class="<?php if($seq_active === '5') echo 'seq-in'; ?>">
 									<button id='add-bir' class='btn btn-info btn-sm btn-raised ripple-effect'><i class='fa fa-plus'></i></button>

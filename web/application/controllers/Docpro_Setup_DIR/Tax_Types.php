@@ -21,6 +21,7 @@ class Tax_Types extends CI_Controller{
 	}
 	public function edit(){
 		$data = [
+					'tt_code' => $this->input->post('tt-edit-code'),
 					'tt_name' => $this->input->post('tt-edit-name'),
 					'tt_shortname' => $this->input->post('tt-edit-shortname'),
 				];

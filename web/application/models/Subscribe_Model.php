@@ -66,6 +66,7 @@ class Subscribe_model extends CI_Model {
 
         foreach ($coa_lvl_1 as $key => $lvl1) {
             $lvl_1_data = [
+                'lvl_1_seq' => $lvl1->lvl_1_seq,
                 'lvl_1_code' => $lvl1->lvl_1_code,
                 'lvl_1_name' => $lvl1->lvl_1_name,
                 'lvl_1_company' => 'company',
@@ -79,6 +80,7 @@ class Subscribe_model extends CI_Model {
 
             foreach ($coalvl_1_2 as $key => $lvl2) {
                 $coa_2_data = [
+                    'lvl_2_seq' => $lvl2->lvl_2_seq,
                     'lvl_2_code' => $lvl2->lvl_2_code,
                     'lvl_2_name' => $lvl2->lvl_2_name,
                     'lvl_2_company' => 'company',
@@ -92,6 +94,7 @@ class Subscribe_model extends CI_Model {
 
                 foreach ($coalvl_2_3 as $key => $lvl3) {
                     $coa_3_data = [
+                        'lvl_3_seq' => $lvl3->lvl_3_seq,
                         'lvl_3_code' => $lvl3->lvl_3_code,
                         'lvl_3_code_int' => $lvl3->lvl_3_code_int,
                         'lvl_3_bir' => $lvl3->lvl_3_bir,
@@ -107,6 +110,7 @@ class Subscribe_model extends CI_Model {
 
                     foreach ($coalvl_3_4 as $key => $lvl4) {
                         $coa_4_data = [
+                            'lvl_4_seq' => $lvl4->lvl_4_seq,
                             'lvl_4_code' => $lvl4->lvl_4_code,
                             'lvl_4_name' => $lvl4->lvl_4_name,
                             'lvl_4_company' => 'company',
@@ -120,6 +124,7 @@ class Subscribe_model extends CI_Model {
 
                         foreach ($coalvl_4_5 as $key => $lvl5) {
                             $coa_5_data = [
+                                'lvl_5_seq' => $lvl5->lvl_5_seq,
                                 'lvl_5_code' => $lvl5->lvl_5_code,
                                 'lvl_5_name' => $lvl5->lvl_5_name,
                                 'lvl_5_company' => 'company',
@@ -149,24 +154,51 @@ class Subscribe_model extends CI_Model {
             }
         }
 
-// TAXES
-        $taxes = self::$db->get_where('taxes', ['t_company' => 'docpro', 'flag' => '1'])->result();
-        foreach ($taxes as $key => $tax) {
-            $tax = [
-                    't_seq' => $tax->t_seq,
-                    't_code' => $tax->t_code,
-                    't_name' => $tax->t_name,
-                    't_shortname' => $tax->t_shortname,
-                    't_rate' => $tax->t_rate,
-                    't_base' => $tax->t_base,
-                    'tt_id' => $tax->tt_id,
-                    't_company' => 'company',
-                    't_setup_company' => 'docpro'
+// TAX TYPES
+        $tax_types = self::$db->get_where('tax_types', ['tt_company' => 'docpro', 'flag' => '1'])->result();
+        foreach ($tax_types as $key => &$value) {
+            $tt = [
+                    'tt_seq' => $value->tt_seq,
+                    'tt_code' => $value->tt_code,
+                    'tt_name' => $value->tt_name,
+                    'tt_shortname' => $value->tt_shortname,
+                    'tt_company' => 'company',
+                    'flag' => '1',
                 ];
 
-            self::$db->insert('taxes', $tax);
-            $t_id = self::$db->insert_id();
-            self::$db->insert('co_taxes', ['t_id' => $t_id, 'cb_id' => $cb_id]);
+            self::$db->insert('tax_types', $tt);
+            $tt_id = self::$db->insert_id();
+            self::$db->insert('co_tax_types', ['tt_id' => $tt_id, 'cb_id' => $cb_id]);
+
+            $value->equivalent = $tt_id;
+        }
+
+// TAXES
+        $taxes = self::$db->get_where('taxes', ['t_company' => 'docpro', 'flag' => '1'])->result();
+        foreach ($taxes as $key1 => $tax) {
+            $tax_copy = $tax;
+            foreach ($tax_types as $key2 => $value) {
+                $tt_copy = $value;
+
+                if($tt_copy->tt_id === $tax_copy->tt_id){
+                    $tax = [
+                        't_seq' => $tax->t_seq,
+                        't_code' => $tax->t_code,
+                        't_name' => $tax->t_name,
+                        't_shortname' => $tax->t_shortname,
+                        't_rate' => $tax->t_rate,
+                        't_base' => $tax->t_base,
+                        'tt_id' => $value->equivalent,
+                        't_company' => 'company',
+                        't_setup_company' => 'docpro'
+                    ];
+
+                    self::$db->insert('taxes', $tax);
+                    $t_id = self::$db->insert_id();
+                    self::$db->insert('co_taxes', ['t_id' => $t_id, 'cb_id' => $cb_id]);
+                }
+                
+            }
         }
     }
 

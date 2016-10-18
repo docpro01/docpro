@@ -1,59 +1,64 @@
-<div class='side-body padding-top'>
-	<div class='card'>
+<div class='side-body padding-top hide-table-setting'>
+	<div class='card custom-card col-md-9 main-table-panel'>
 		<div class='card-header'>
 			<div class='card-title'>
 				<div class='title'>Branches</div>
 			</div>
 		</div>
-		<div class='card-body' style='padding: 0;'>
+		<div class='card-body hide-table-setting' style='padding: 0;'>
 			<div class='row'>
-				<div id='setup-tab-1' class='setup-tab active col-md-6'>
-					<button type='button' class='btn btn-default btn-sm btn-flat ripple-effect btn-seq <?php if($seq_active === '1'){ echo 'seq-selected'; } ?>' style='margin: 0;'>
-						<span>Summary</span>
-					</button>
+				<div class='col-md-12' style="margin-top: 25px;">
+					<div class='col-md-12' id='branches-table-row' style="padding: 0;">
+						<button id='add' type='button' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add'><i class='fa fa-plus'></i></button>
+						<table id='branches-table' class='table table-bordered' style="min-width: 1400px;">
+							<thead>
+								<th>Opts.</th>
+								<th>Name</th>
+								<th>Address</th>
+								<th>TIN</th>
+								<th>Tax Type</th>
+								<th>Contact Number</th>
+								<th>Email</th>
+							</thead>
+						</table>
+					</div>
 				</div>
-				<div id='setup-tab-2' class='setup-tab col-md-6'>
-					<button type='button' class='btn btn-default btn-sm btn-flat ripple-effect btn-seq <?php if($seq_active === '2'){ echo 'seq-selected'; } ?>' style='margin: 0;'>
-						<span>Setting</span>
-					</button>
-				</div>
-				<input type="hidden" id='seq-active' name="seq-active" value="<?php echo $seq_active; ?>">
 			</div>
-			<div class='row' style="margin-right: 0; margin-left: 0; padding-right: 20px; padding-left: 20px;">
-				<div id='branch-seq'>
-					<ul class='seq-canvas'>
-						<li>
-							<div class='col-md-12'>
-								<table id='branches-summary-table' class='table table-bordered' style="min-width: 1400px;">
-									<thead>
-										<th>Name</th>
-										<th>Address</th>
-										<th>TIN</th>
-										<th>Tax Type</th>
-										<th>Contact Number</th>
-										<th>Email</th>
-									</thead>
-								</table>
-							</div>
-						</li>
-						<li>
-							<button id='add' type='button' class='btn btn-info btn-sm btn-raised ripple-effect title' custom-title='Add' style="margin-left: 15px;"><i class='fa fa-plus'></i></button>
-							<div class='col-md-12' id='branches-table-row'>
-								<table id='branches-table' class='table table-bordered' style="min-width: 1400px;">
-									<thead>
-										<th>Opts.</th>
-										<th>Name</th>
-										<th>Address</th>
-										<th>TIN</th>
-										<th>Tax Type</th>
-										<th>Contact Number</th>
-										<th>Email</th>
-									</thead>
-								</table>
-							</div>
-						</li>
-					</ul>
-				</div>
+		</div>
+	</div>
+	<div class='col-md-1' style="width: 32px; padding: 0;">
+		<button type='button' class='btn btn-dark btn-sm ripple-effect table-setting-toggle'>Table Setting</button>
+	</div>
+	<div class='col-md-2 table-setting-panel'>
+		<div class='col-md-12' style="padding: 0;">
+			<div class='col-md-12' style="padding: 0; height: 60px;">
+				<button type='button' class='btn btn-default btn-sm ripple-effect close-table-option' style="float: left; margin: 0; height: 100%;">X</button>
+				<h3 class='option-title' style="margin-left: 65px;">Table Setting</h3>
+			</div>
+			<div class='col-md-12'>
+				<table class='table option-table'>
+					<tr>
+						<td><p>Search</p></td>
+						<td><input type="text" class='form-control search'></td>
+					</tr>
+					<tr>
+						<td><p>Entries</p></td>
+						<td>
+							<select type="text" class='form-control entry'>
+								<option value='10'>10</option>
+								<option value='25'>25</option>
+								<option value='50'>50</option>
+								<option value='100'>100</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' style="padding-bottom: 0;"><p>Show Action Buttons</p></td>
+					</tr>
+					<tr>
+						<td colspan='2' style="padding-top: 0;"><input id="switch-state" class='bootstrap-switch' type="checkbox" checked data-on-text="Yes" data-off-text="No"></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

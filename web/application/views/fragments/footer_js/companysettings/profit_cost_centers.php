@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/profit_cost_centers_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/profit_cost_centers_seq.js"></script> -->
 <script>
     $(document).ready(function(){
         var seq = 0;
@@ -222,5 +222,7 @@
         $('.navbar-body').on('click', '.form-control', function(){
             $('#update-options').empty();
         });
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(table, $(this).closest('side-body'));
     });
 </script>

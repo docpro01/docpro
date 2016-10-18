@@ -26,8 +26,10 @@ class Docpro_Setup extends MY_Controller{
         $this->load->view($this->layout, ['head_css'=>'fragments/head_css/docprosetup/modes_of_payment', 'top_navbar'=>'fragments/top_navbar/global_top_navbar', 'content'=>'fragments/content/docprosetup/modes_of_payment', 'footer_js'=>'fragments/footer_js/docprosetup/modes_of_payment', 'back_button'=>'../docpro_setup', 'active_nav'=>'docpro-setup', 'top_type'=>Types_Of_Payment_model::get(), 'sess_data'=>$this->session->userdata('logged_in'), 'seq_active' => $seq_active]);
     }	
     public function get_taxes(){
+        $tt_id = $this->session->flashdata('tt_id') ? $this->session->flashdata('tt_id') : '0';
+        $tt_name = $this->session->flashdata('tt_name') ? $this->session->flashdata('tt_name') : '';
         $seq_active = $this->session->flashdata('seq_active') ? $this->session->flashdata('seq_active') : '1';
-        $this->load->view($this->layout, ['head_css'=>'fragments/head_css/docprosetup/taxes', 'top_navbar'=>'fragments/top_navbar/global_top_navbar', 'content'=>'fragments/content/docprosetup/taxes', 'footer_js'=>'fragments/footer_js/docprosetup/taxes', 'back_button'=>'../docpro_setup', 'active_nav'=>'docpro-setup', 'tt_type'=>Tax_Types_Model::get(), 'sess_data'=>$this->session->userdata('logged_in'), 'seq_active' => $seq_active]);
+        $this->load->view($this->layout, ['head_css'=>'fragments/head_css/docprosetup/taxes', 'top_navbar'=>'fragments/top_navbar/global_top_navbar', 'content'=>'fragments/content/docprosetup/taxes', 'footer_js'=>'fragments/footer_js/docprosetup/taxes', 'back_button'=>'../docpro_setup', 'active_nav'=>'docpro-setup', 'tt_type'=>Tax_Types_Model::get(), 'sess_data'=>$this->session->userdata('logged_in'), 'seq_active' => $seq_active, 'tt_id' => $tt_id, 'tt_name' => $tt_name]);
     }	
     public function get_chart_of_accounts(){
         $seq_active = $this->session->flashdata('seq_active') ? $this->session->flashdata('seq_active') : '1';

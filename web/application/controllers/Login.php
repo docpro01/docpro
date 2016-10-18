@@ -3,12 +3,13 @@ class Login extends MY_Controller{
     function __construct(){
         parent::__construct('fragments_public/master_layout');
         if($this->session->userdata('logged_in')){
+            if($this->session->userdata('user')->u_type === 'Super Admin' && $this->session->userdata('user')->u_company === 'docpro'){
+                redirect('docpro_setup', 'refresh');
+            }
             if($this->session->userdata('user')->setup){
                 redirect('setup', 'refresh');
             }
-            if($this->session->userdata('user')->u_type === 'Super Admin' && $this->session->userdata('user')->u_company === 'docpro'){
-                redirect('docpro_settings', 'refresh');
-            }
+            
             redirect('home', 'refresh');
         }
     }
@@ -43,7 +44,7 @@ class Login extends MY_Controller{
             if($user->u_type === 'Super Admin' && $user->u_company === 'company' && $user->setup === '1'){
                 redirect('setup', 'refresh');
             }
-            
+            redirect('home', 'refresh');
            
     	}
     }

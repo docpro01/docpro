@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/chart_of_accounts_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/chart_of_accounts_seq.js"></script> -->
 <script>
 	$(document).ready(function(){
 		var lvl_1 = [];
@@ -132,5 +132,7 @@
             $('.popover').popover('hide');
             $('.card-body button').removeAttr('disabled');
         });
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(coa, $(this).closest('side-body'));
 	});
 </script>

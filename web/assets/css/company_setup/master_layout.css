@@ -1,5 +1,29 @@
+@font-face{
+	font-family: segoeui;
+	src: url('../../font/segoeui-light.woff');
+}
 body{
 	background-color: #FFF !important;
+}
+
+table{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+table button{
+	font-size: 7px !important;
+}
+.breadcrumb{
+	padding-top: 7px;
+	padding-bottom: 7px;
+	font-size: 11px;
+}
+.seq-heading{
+	text-align: left; 
+	font-size: 22px; 
+	font-family: "Times New Roman", Times, serif; 
+	font-weight: 100; 
+	color: #000; 
+	margin-bottom: 25px;
 }
 #setup-banner{
     background: #FFF url('../../img/background_1.png') repeat; 
@@ -28,15 +52,62 @@ body{
 	background-color: #EFEFEF;
 	width: 100%;
 	height: 100%;
-	padding: 20px 0;
+	padding: 15px 0;
+	font-size: 11px !important;
 }
 #setup-nav .setup-tab.active button{
 	background-color: #000;
 	color: #FFF;
 }
+table th,
+table td
+{
+	font-size: 11px !important;
+}
+.dataTables_filter label{
+	font-size: 12px;
+}
+.dataTables_filter label input{
+	font-size: 11px !important;
+	height: 15px !important;
+}
+.popover{
+	padding: 0;
+}
+.popover .popover-content{
+	padding-bottom: 3px !important;
+	padding-top: 8px !important;
+}
 .popover label{
-	font-size: 12px !important;
+	font-size: 11px !important;
 }
 .popover input{
-	font-size: 12px !important;
+	font-size: 11px !important;
+	height: 28px !important;
+}
+.popover span{
+	font-weight: normal !important;
+}
+.popover h4{
+	font-size: 16px !important;
+}
+.popover button{
+	line-height: 12px !important;
+}
+.popover .selectize-input{
+	height: 28px;
+	font-size: 11px;
+	line-height: 16px;
+}
+.popover .selectize-input .item{
+	display: block;
+}
+.popover .selectize-control{
+	height: 28px;
+}
+.popover .selectize-dropdown-content{
+	font-size: 11px;
+}
+.popover .selectize-input.not-full input{
+	margin-top: -6px !important;
 }

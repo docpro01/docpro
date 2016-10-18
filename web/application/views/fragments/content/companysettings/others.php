@@ -1,4 +1,4 @@
-<div class='side-body padding-top'>
+<!-- <div class='side-body padding-top'>
 	<div class='card'>
 		<div class='card-header'>
 			<div class='card-title'>
@@ -42,6 +42,66 @@
 						</li>
 					</ul>
 				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+<div class='side-body padding-top hide-table-setting'>
+	<div class='card custom-card col-md-9 main-table-panel'>
+		<div class='card-header'>
+			<div class='card-title'>
+				<div class='title'>Others</div>
+			</div>
+		</div>
+		<div class='card-body hide-table-setting' style='padding: 0;'>
+			<div class='row'>
+				<div class='col-md-12' style="margin-top: 25px;">
+					<div class='col-md-12' id='others-table-row' style="padding: 0;">
+						<button id='add' type='button' class='btn btn-info btn-sm btn-raised ripple-effect'><i class='fa fa-plus'></i></button>
+						<table id='others-table' class='table table-hovered table-bordered' style="min-width: 100%;">
+							<thead>
+								<th>Options</th>
+								<th>Name</th>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class='col-md-1' style="width: 32px; padding: 0;">
+		<button type='button' class='btn btn-dark btn-sm ripple-effect table-setting-toggle'>Table Setting</button>
+	</div>
+	<div class='col-md-2 table-setting-panel'>
+		<div class='col-md-12' style="padding: 0;">
+			<div class='col-md-12' style="padding: 0; height: 60px;">
+				<button type='button' class='btn btn-default btn-sm ripple-effect close-table-option' style="float: left; margin: 0; height: 100%;">X</button>
+				<h3 class='option-title' style="margin-left: 65px;">Table Setting</h3>
+			</div>
+			<div class='col-md-12'>
+				<table class='table option-table'>
+					<tr>
+						<td><p>Search</p></td>
+						<td><input type="text" class='form-control search'></td>
+					</tr>
+					<tr>
+						<td><p>Entries</p></td>
+						<td>
+							<select type="text" class='form-control entry'>
+								<option value='10'>10</option>
+								<option value='25'>25</option>
+								<option value='50'>50</option>
+								<option value='100'>100</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='2' style="padding-bottom: 0;"><p>Show Action Buttons</p></td>
+					</tr>
+					<tr>
+						<td colspan='2' style="padding-top: 0;"><input id="switch-state" class='bootstrap-switch' type="checkbox" checked data-on-text="Yes" data-off-text="No"></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

@@ -2,6 +2,9 @@
 
 <script>
     $(document).ready(function(){
+        var tt_id = parseFloat($("input[name=default_tt_id]").val());
+        var tt_name = $("input[name=default_tt_name]").val().length > 0 ? $("input[name=default_tt_name]").val() : '';
+        var tt_code = '';
         var no_space = function(){
             $(".no-space").on({
               keydown: function(e) {
@@ -19,22 +22,51 @@
                             mRender: function(data, type, full){
                                 return "<button type='button' class='btn btn-primary btn-xs btn-raised view title' custom-title='View'><i class='fa fa-eye'></i></button>\n\
                                         <button type='button' class='btn btn-success btn-xs btn-raised edit title' custom-title='Edit'><i class='fa fa-pencil'></i></button>\n\
-                                        <button type='button' class='btn btn-warning btn-xs btn-raised title update' custom-title='Update'><i class='fa fa-refresh'></i></button>\n\
                                         <button type='button' class='btn btn-danger btn-xs btn-raised title delete' custom-title='Delete'><i class='fa fa-times'></i></button>";
                             }
                         },
+                        {'data': 'tt_seq'}, 
                         {'data': 'tt_code'}, 
                         {'data': 'tt_name'}, 
                         {'data': 'tt_shortname'}
                     ],
-                    columnDefs: [{targets: 0, width: '130px'}, {targets: 1, width: '80px'}, {targets: 3, width: '120px'}],
+                    columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2], width: '80px'}, {targets: 4, width: '120px'}],
+                    order: [['2', 'asc']],
+                    scrollX: true,
+                    bLengthChange: false,
+                    fnDrawCallback: function(oSettings) {
+                        $.each(oSettings.aoData, function(index, data){
+                            if(data._aData.tt_id+'' === tt_id+''){
+                                $('#tax-types-table tbody tr:eq('+index+')').addClass('selected');
+                            }
+                        });
+                    },
+                    initComplete: function(json, src){
+                        initRipple();
+                        init_tooltip();
+                    }
+        });
+
+        var table = $('#taxes-table').DataTable({
+            ajax: window.location.origin+'/docpro_settings/taxes/get/'+tt_id,
+            columns:[
+                        {
+                            mData: null, bSortable: false,
+                            mRender: function(data, type, full){
+                                return "<button type='button' class='btn btn-primary btn-xs btn-raised title view' custom-title='View'><i class='fa fa-eye'></i></button>\n\
+                                        <button type='button' class='btn btn-success btn-xs btn-raised title edit' custom-title='Edit'><i class='fa fa-pencil'></i></button>\n\
+                                        <button type='button' class='btn btn-danger btn-xs btn-raised title delete' custom-title='Delete'><i class='fa fa-times'></i></button>";
+                            }
+                        },
+                        {'data': 't_seq'},{'data': 't_code'}, {'data': 'tt_name'}, {'data': 't_name'}, {'data': 't_shortname'}, {'data': 't_rate'}, {'data': 't_base'}
+                    ],
+                    columnDefs: [{targets: 0, width: '100px'}, {targets: [1,2], width: '40px'}],
                     order: [['1', 'asc']],
                     scrollX: true,
                     bLengthChange: false,
                     initComplete: function(json, src){
                         initRipple();
-                        init_tooltip();
-                    }
+                    },
         });
         
         var tmp = $.fn.popover.Constructor.prototype.show;
@@ -44,6 +76,32 @@
                 this.options.callback();
               }
         }
+
+        var init_breadcrumb = function(){
+            $('#tax_breadcrumb').html(
+                                    "<li><a href='#'>"+((tt_name === '') ? '...' : tt_name)+"</a></li>"+
+                                    "<li><a href='#'>...</a></li>"
+                                );
+            if(parseFloat(tt_id) > 0){
+                $('#add').removeAttr('disabled');
+                $('#tax-alert').css('display', 'none');
+            }else{
+               $('#add').attr('disabled', true);
+               $('#tax-alert').css('display', 'block');
+            }
+        }
+        init_breadcrumb();
+        
+
+        $('#tax-types-table').on('click', 'tr', function(){
+            $('#tax-types-table tr').removeClass('selected');
+            $(this).addClass('selected');
+            var data = tt_table.row($(this)).data();
+            tt_id = data.tt_id;
+            tt_name = data.tt_name;
+            init_breadcrumb();
+            table.ajax.url(window.location.origin+'/docpro_settings/taxes/get/'+tt_id).load();
+        });
 
         $('#add-tt').click(function(){
             $('body').on('hidden.bs.popover', function (e) {
@@ -202,50 +260,7 @@
             initSingleSubmit();
         });
 
-        $('div').on('click', '.close-popover', function(){
-            $('.popover').popover('hide');
-            $('.card-body button').removeAttr('disabled');
-        });
-        $('div').on('click', '#close-btn', function(){
-            $('.popover').popover('hide');
-            $('.card-body button').removeAttr('disabled');
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function(){
-        var table = $('#taxes-table').DataTable({
-            ajax: window.location.origin+'/docpro_settings/taxes/get',
-            columns:[
-                        {
-                            mData: null, bSortable: false,
-                            mRender: function(data, type, full){
-                                return "<button type='button' class='btn btn-primary btn-xs btn-raised title view' custom-title='View'><i class='fa fa-eye'></i></button>\n\
-                                        <button type='button' class='btn btn-success btn-xs btn-raised title edit' custom-title='Edit'><i class='fa fa-pencil'></i></button>\n\
-                                        <button type='button' class='btn btn-warning btn-xs btn-raised title update' custom-title='Update'><i class='fa fa-refresh'></i></button>\n\
-                                        <button type='button' class='btn btn-danger btn-xs btn-raised title delete' custom-title='Delete'><i class='fa fa-times'></i></button>";
-                            }
-                        },
-                        {'data': 't_seq'},{'data': 't_code'}, {'data': 'tt_name'}, {'data': 't_name'}, {'data': 't_shortname'}, {'data': 't_rate'}, {'data': 't_base'}
-                    ],
-                    columnDefs: [{targets: 0, width: '130px'}, {targets: 1, width: '40px'}],
-                    order: [['1', 'asc']],
-                    scrollX: true,
-                    bLengthChange: false,
-                    initComplete: function(json, src){
-                        initRipple();
-                    },
-        });
-        
-        var tmp = $.fn.popover.Constructor.prototype.show;
-            $.fn.popover.Constructor.prototype.show = function () {
-              tmp.call(this);
-              if (this.options.callback) {
-                this.options.callback();
-              }
-        }
-        
+// TAX
         $('#add').click(function(){
             $('body').on('hidden.bs.popover', function (e) {
                 $(e.target).data("bs.popover").inState = { click: false, hover: false, focus: false }
@@ -259,6 +274,46 @@
                 },
                 content: function(){
                     return $('#add-popover').html();
+                },
+                callback: function(){
+                    $('#add-type-select').selectize({
+                        create: false,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        },
+                        dropdownParent: null,
+                        onChange: function(){
+                            var selectize = $('#add-type-select.selectized').selectize()[0].selectize
+                            var code = selectize.options[tt_id].code;
+                            $('#add-type-code').val(code);
+                        },
+                    });
+                    var selectize = $('#add-type-select.selectized').selectize()[0].selectize;
+                    selectize.clear();
+                    selectize.clearOptions();
+                    $.get(window.location.origin+'/docpro_settings/taxes/get_tax_types', function(response){
+                        var data = JSON.parse(response);
+                        var selectOptions = [];
+                        $.each(data, function(index, data){
+                            selectOptions.push({
+                                text: data.tt_name,
+                                value: data.tt_id,
+                                code: data.tt_code
+                            });
+                        });
+
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache = {};
+                        selectize.load(function(callback) {
+                            callback(selectOptions);
+                        });
+                        selectize.setValue(tt_id);
+                    });
+                    $('#add-type-id').val(tt_id);
+                    $('#add-type-code').val(tt_code);
+                    $('#add-type-name').val(tt_name);
                 },
                 container: '.navbar-body'
             }).on('show.bs.popover', function(){
@@ -322,8 +377,46 @@
                     return $('#edit-popover').html();
                 },
                 callback: function(){
-                    $('#edit-seq').val(seq);
-                    $('#edit-type').val(data.tt_name);
+                    $('#edit-type-select').selectize({
+                        create: false,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        },
+                        dropdownParent: null,
+                        onChange: function(){
+                            var selectize = $('#edit-type-select.selectized').selectize()[0].selectize
+                            var code = selectize.options[tt_id].code;
+                            $('#edit-type-code').val(code);
+                        },
+                    });
+                    var selectize = $('#edit-type-select.selectized').selectize()[0].selectize;
+                    selectize.clear();
+                    selectize.clearOptions();
+                    $.get(window.location.origin+'/docpro_settings/taxes/get_tax_types', function(response){
+                        var data = JSON.parse(response);
+                        var selectOptions = [];
+                        $.each(data, function(index, data){
+                            selectOptions.push({
+                                text: data.tt_name,
+                                value: data.tt_id,
+                                code: data.tt_code
+                            });
+                        });
+
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache = {};
+                        selectize.load(function(callback) {
+                            callback(selectOptions);
+                        });
+                        selectize.setValue(tt_id);
+                    });
+                    $('#edit-type-id').val(tt_id);
+                    $('#edit-type-code').val(tt_code);
+                    $('#edit-type-name').val(tt_name);
+
+                    $('#edit-code').val(data.t_code);
                     $('#edit-name').val(data.t_name);
                     $('#edit-shortname').val(data.t_shortname);
                     $('#edit-rate').val(data.t_rate);
@@ -361,8 +454,46 @@
                     return $('#update-popover').html();
                 },
                 callback: function(){
-                    $('#update-seq').val(seq);
-                    $('#update-type').val(data.tt_name);
+                    $('#update-type-select').selectize({
+                        create: false,
+                        sortField: {
+                            field: 'text',
+                            direction: 'asc'
+                        },
+                        dropdownParent: null,
+                        onChange: function(){
+                            var selectize = $('#update-type-select.selectized').selectize()[0].selectize
+                            var code = selectize.options[tt_id].code;
+                            $('#update-type-code').val(code);
+                        },
+                    });
+                    var selectize = $('#update-type-select.selectized').selectize()[0].selectize;
+                    selectize.clear();
+                    selectize.clearOptions();
+                    $.get(window.location.origin+'/docpro_settings/taxes/get_tax_types', function(response){
+                        var data = JSON.parse(response);
+                        var selectOptions = [];
+                        $.each(data, function(index, data){
+                            selectOptions.push({
+                                text: data.tt_name,
+                                value: data.tt_id,
+                                code: data.tt_code
+                            });
+                        });
+
+                        selectize.clear();
+                        selectize.clearOptions();
+                        selectize.renderCache = {};
+                        selectize.load(function(callback) {
+                            callback(selectOptions);
+                        });
+                        selectize.setValue(tt_id);
+                    });
+                    $('#update-type-id').val(tt_id);
+                    $('#update-type-code').val(tt_code);
+                    $('#update-type-name').val(tt_name);
+
+                    $('#update-code').val(data.t_code);
                     $('#update-name').val(data.t_name);
                     $('#update-shortname').val(data.t_shortname);
                     $('#update-rate').val(data.t_rate);
@@ -400,7 +531,7 @@
                     return $('#delete-popover').html();
                 },
                 callback: function(){
-                    $('#delete-seq').val(seq);
+                    $('#delete-code').val(data.t_code);
                     $('#delete-type').val(data.tt_name);
                     $('#delete-name').val(data.t_name);
                     $('#delete-shortname').val(data.t_shortname);
@@ -422,6 +553,28 @@
             initValidation();
             initSingleSubmit();
         });
+
+        $('div').on('click', '.close-popover', function(){
+            $('.popover').popover('hide');
+            $('.card-body button').removeAttr('disabled');
+        });
+        $('div').on('click', '#close-btn', function(){
+            $('.popover').popover('hide');
+            $('.card-body button').removeAttr('disabled');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var tmp = $.fn.popover.Constructor.prototype.show;
+            $.fn.popover.Constructor.prototype.show = function () {
+              tmp.call(this);
+              if (this.options.callback) {
+                this.options.callback();
+              }
+        }
+        
         $('div').on('click', '.close-popover', function(){
             $('.popover').popover('hide');
             $('.card-body button').removeAttr('disabled');
@@ -454,7 +607,7 @@
             initRipple();
         });
 
-        $('#switch-state').bootstrapSwitch();
-        init_table_option(table, $(this).closest('side-body'));
+        // $('#switch-state').bootstrapSwitch();
+        // init_table_option(table, $(this).closest('side-body'));
     });
 </script>

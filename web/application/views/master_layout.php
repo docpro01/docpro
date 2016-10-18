@@ -547,7 +547,7 @@
 		<div id='company-settings-popover' style='display: none;'>
 			<div class='sidebar-popover-content'>
 				<div class='col-md-12 sidebar-popover'>
-					<a href="<?php echo base_url(); ?>company_settings/company" style='padding-right: 75px;'><i class='fa fa-file'></i>&nbsp; Company</a>
+					<a href="<?php echo base_url(); ?>company_settings/branches" style='padding-right: 75px;'><i class='fa fa-file'></i>&nbsp; Branches</a>
 				</div>
 				<div class='col-md-12 sidebar-popover'>
 					<a href="<?php echo base_url(); ?>company_settings/users" style='padding-right: 96px;'><i class='fa fa-file'></i>&nbsp; Users</a>
@@ -663,9 +663,9 @@
 				<div class='col-md-12 sidebar-popover'>
 					<a href="<?php echo base_url(); ?>docpro_setup/taxes" style='padding-right: 96px;'><i class='fa fa-file'></i>&nbsp; Tax Types</a>
 				</div>
-				<div class='col-md-12 sidebar-popover'>
+				<!-- <div class='col-md-12 sidebar-popover'>
 					<a href="<?php echo base_url(); ?>docpro_setup/payment" style='padding-right: 56px;'><i class='fa fa-file'></i>&nbsp; Types of Payment</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		

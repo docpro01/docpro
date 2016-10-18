@@ -154,17 +154,11 @@ var lvl_4_name = '...';
 var lvl1 = $('#coa-lvl1').DataTable({
 	ajax: window.location.origin+'/setup/setup3/get_coa_lvl1',
 	columns: [
-				{
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'lvl_1_seq'},
 				{'data': 'lvl_1_code'},
 				{'data': 'lvl_1_name'},
 			],
-	columnDefs: [{targets: 0, width: '50px'}, {targets: [1,2], width: '70px'}],
+	columnDefs: [{targets: [0,1], width: '70px'}],
 	order: [['2', 'asc']],
 	scrollX: true,
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
@@ -175,18 +169,12 @@ var lvl1 = $('#coa-lvl1').DataTable({
 var lvl2 = $('#coa-lvl2').DataTable({
 	ajax: window.location.origin+'/setup/setup3/get_coa_lvl2/'+lvl_1_id,
 	columns: [
-				{
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'lvl_2_seq'},
 				{'data': 'lvl_1_code'},
 				{'data': 'lvl_2_code'},
 				{'data': 'lvl_2_name'},
 			],
-	columnDefs: [{targets: 0, width: '50px'}, {targets: [1,2,3], width: '70px'}],
+	columnDefs: [{targets: [0,1,2], width: '70px'}],
 	order: [['3', 'asc']],
 	scrollX: true,
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
@@ -197,12 +185,6 @@ var lvl2 = $('#coa-lvl2').DataTable({
 var lvl3 = $('#coa-lvl3').DataTable({
 	ajax: window.location.origin+'/setup/setup3/get_coa_lvl3/'+lvl_2_id,
 	columns: [
-				{
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'lvl_3_seq'},
 				{'data': 'lvl_1_code'},
 				{'data': 'lvl_2_code'},
@@ -210,7 +192,7 @@ var lvl3 = $('#coa-lvl3').DataTable({
 				{'data': 'lvl_3_name'},
 				{'data': 'lvl_3_bir'},
 			],
-	columnDefs: [{targets: 0, width: '50px'},{targets: [1,2,3,4], width: '70px'}],
+	columnDefs: [{targets: [0,1,2,3], width: '70px'}],
 	scrollX: true,
 	order: [['4', 'asc']],
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
@@ -221,12 +203,6 @@ var lvl3 = $('#coa-lvl3').DataTable({
 var lvl4 = $('#coa-lvl4').DataTable({
 	ajax: window.location.origin+'/setup/setup3/get_coa_lvl4/'+lvl_3_id,
 	columns: [
-				{
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'lvl_4_seq'},
 				{'data': 'lvl_1_code'},
 				{'data': 'lvl_2_code'},
@@ -234,7 +210,7 @@ var lvl4 = $('#coa-lvl4').DataTable({
 				{'data': 'lvl_4_code'},
 				{'data': 'lvl_4_name'},
 			],
-	columnDefs: [{targets: 0, width: '50px'},{targets: [1,2,3,4,5], width: '70px'}],
+	columnDefs: [{targets: [0,1,2,3,4], width: '70px'}],
 	scrollX: true,
 	order: [['5', 'asc']],
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
@@ -245,16 +221,6 @@ var lvl4 = $('#coa-lvl4').DataTable({
 var lvl5 = $('#coa-lvl5').DataTable({
 	ajax: window.location.origin+'/setup/setup3/get_coa_lvl5/'+lvl_4_id,
 	columns: [
-				{
-					bSortable: false, bSearchable: false,
-					mRender: function(row, setting, full){
-						if(full.lvl_5_setup_company === 'docpro'){
-							return "";
-						}
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'lvl_5_seq'},
 				{'data': 'lvl_1_code'},
 				{'data': 'lvl_2_code'},
@@ -264,7 +230,7 @@ var lvl5 = $('#coa-lvl5').DataTable({
 				{'data': 'lvl_5_name'},
 			],
 	order: [['6', 'asc']],
-	columnDefs: [{targets: 0, width: '70px'}, {targets: [1,2,3,4,5,6], width: '70px'}],
+	columnDefs: [{targets: [0,1,2,3,4,5], width: '70px'}],
 	scrollX: true,
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
 	initComplete: function(){
@@ -431,33 +397,19 @@ var tt_id = 0;
 var tax_types = $('#tax-types').DataTable({
 	ajax: window.location.origin+'/setup/setup4/get_tax_types',
 	columns: [
-				{
-					bSortable: false, bSearchable: false,
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 'tt_seq'},
 				{'data': 'tt_code'},
 				{'data': 'tt_name'},
 				{'data': 'tt_shortname'}
 			],
 	order: [['1', 'asc']],
-	columnDefs: [{targets: 0, width: '70px'},{targets: [0,1], width: '40px'}],
+	columnDefs: [{targets: [0,1], width: '40px'}],
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
 	scrollX: true,
 });
 var tax = $('#tax').DataTable({
 	ajax: window.location.origin+'/setup/setup4/get_tax/'+tt_id,
 	columns: [
-				{
-					bSortable: false, bSearchable: false,
-					mRender: function(row, setting, full){
-						return "<button type='button' class='btn btn-success btn-xs btn-raised edit'><i class='fa fa-pencil'></i></button>"+
-							"<button type='button' class='btn btn-danger btn-xs btn-raised delete'><i class='fa fa-times'></i></button>";
-					}
-				},
 				{'data': 't_seq'},
 				{'data': 't_code'},
 				{'data': 't_name'},
@@ -466,7 +418,7 @@ var tax = $('#tax').DataTable({
 				{'data': 't_base'},
 			],
 	order: [['1', 'asc']],
-	columnDefs: [{targets: 0, width: '70px'},{targets: [1,2], width: '40px'},{targets: 4, width: '150px'},{targets: [5,6], width: '80px'}],
+	columnDefs: [{targets: [0,1], width: '40px'},{targets: 3, width: '150px'},{targets: [4,5], width: '80px'}],
 	sDom: '<"top"f>rt<"bottom"p><"clear">',
 	scrollX: true,
 	initComplete: function(){

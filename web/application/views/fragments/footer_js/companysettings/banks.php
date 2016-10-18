@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/banks_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/banks_seq.js"></script> -->
 <script>
     $(document).ready(function(){
         var seq = 0;
@@ -210,6 +210,8 @@
             initRipple();
         });
         initButtonPrevention();
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(table, $(this).closest('side-body'));
     });
     var initButtonPrevention = function(){
         jQuery.fn.preventDoubleSubmission = function(){

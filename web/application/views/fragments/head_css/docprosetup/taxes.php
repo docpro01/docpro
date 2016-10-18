@@ -72,7 +72,7 @@
 		max-width: 100%;
 		background-color: #e8e8e8;
 		box-shadow: 10px;
-		width: 800px;
+		width: 500px;
 
 	}
 	.app-container .popover-content > div:first-child{
@@ -107,7 +107,7 @@
 
 	.modal-footer{
 		background-color: #e8e8e8;
-		width: 795px;
+		width: 100%;
 	}
 
 	.modal-body, .col-md-4{
@@ -115,7 +115,7 @@
 	}
 
 	.edit-modal-body .modal-body, .update-modal-body .modal-body, .edit-modal-body .col-md-4, .update-modal-body .col-md-4{
-		height: 252px;
+		height: 272px;
 	}
 
 	.modal-body{
@@ -148,7 +148,7 @@
 	}
 
 	.delete-modal-body .modal-body{
-		height: 245px;
+		height: 270px;
 	}
 
 	.delete-modal-body .modal-footer{
@@ -258,4 +258,19 @@
 	.dataTables_wrapper .col-sm-6{
 		padding: 0;
 	}*/
+</style>
+<style>
+	#tax-types-table tr:hover{
+		cursor: hand;
+		cursor: pointer;
+	}
+	.selectize-input{
+		text-align: center;
+	}
+	.tax-alert{
+		background-color: #f9e0e0 !important;
+	    border-left: 3px solid red !important;
+	    color: red !important;
+	    float: left;
+	}
 </style>

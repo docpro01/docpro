@@ -1,4 +1,4 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/departments_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/departments_seq.js"></script> -->
 <script>
     $(document).ready(function(){
         var seq = 0;
@@ -169,5 +169,7 @@
             $('.popover').popover('hide');
             $('.card-body button').removeAttr('disabled');
         });
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(table, $(this).closest('side-body'));
     });
 </script>

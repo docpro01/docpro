@@ -17,17 +17,18 @@
 				<h4 style="font-weight: bold; margin-bottom: 15px; font-size: 22px;">How do you like to setup your account</h4>
 				<div class='col-md-12'>
 					<div class='col-md-6'>
-						<label style="font-size: 16px;"><input type="checkbox" name="setup_type" style="margin: 0;"> Default</label>
+						<label style="font-size: 16px;"><input class='setup_type' type="checkbox" value='default' name="setup_type" style="margin: 0;"> Default</label>
 						<p>Chart of accounts categories and taxes will be set on default</p>
 					</div>
 					<div class='col-md-6'>
-						<label style="font-size: 16px;"><input type="checkbox" name="setup_type" style="margin: 0;"> Customize</label>
+						<label style="font-size: 16px;"><input class='setup_type' type="checkbox" value='customize' name="setup_type" style="margin: 0;"> Customize</label>
 						<p>You can customize your chart of accounts categories and taxes</p>
 					</div>
 				</div>
 			</div>
+			<p id='alert-setup' style="color: red; display: none;"><i class='fa fa-warning'></i>&nbsp; Please select setup type</p>
 			<div class='col-md-12'>
-				<a id='continue-setup-btn' class='btn btn-primary btn-lg' href="<?php echo base_url(); ?>setup/account" style="margin-top: 50px; background-color: #000 !important; text-transform: none;">Proceed</a>
+				<button id='continue-setup-btn' class='btn btn-primary btn-lg' style="margin-top: 50px; background-color: #000 !important; text-transform: none;">Proceed</button>
 			</div>
 		</div>
 	</div>

@@ -1,31 +1,31 @@
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/users_seq.js"></script>
+<!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/company_settings/users_seq.js"></script> -->
 <script>
     $(document).ready(function(){
         var seq = 0;
-        var table_summary = $('#users-summary-table').DataTable({
-            ajax: window.location.origin+'/company_settings/users/get',
-            columns: [
-                        {
-                            bSortable: false, bSearchable: false,
-                            mRender: function(row, setting, full){
-                                return "<button type='button' class='btn btn-default btn-xs btn-raised accounts title' custom-title='Accounts'>Accounts</button>";
-                            }
-                        },
-                        {'data': 'p_fname'},
-                        {'data': 'p_mname'},
-                        {'data': 'p_lname'},
-                        {'data': 'p_address'},
-                        {'data': 'p_cno'},
-                        {'data': 'p_email'},
-            ],
-            scrollX: true,
-            columnDefs: [{targets: 0, width: '40px'}],
-            order: [['1', 'asc']],
-            initComplete: function(settings, json){
-                seq = 0;
-                initRipple();
-            }
-        });
+        // var table_summary = $('#users-summary-table').DataTable({
+        //     ajax: window.location.origin+'/company_settings/users/get',
+        //     columns: [
+        //                 {
+        //                     bSortable: false, bSearchable: false,
+        //                     mRender: function(row, setting, full){
+        //                         return "<button type='button' class='btn btn-default btn-xs btn-raised accounts title' custom-title='Accounts'>Accounts</button>";
+        //                     }
+        //                 },
+        //                 {'data': 'p_fname'},
+        //                 {'data': 'p_mname'},
+        //                 {'data': 'p_lname'},
+        //                 {'data': 'p_address'},
+        //                 {'data': 'p_cno'},
+        //                 {'data': 'p_email'},
+        //     ],
+        //     scrollX: true,
+        //     columnDefs: [{targets: 0, width: '40px'}],
+        //     order: [['1', 'asc']],
+        //     initComplete: function(settings, json){
+        //         seq = 0;
+        //         initRipple();
+        //     }
+        // });
         var table = $('#users-table').DataTable({
             ajax: window.location.origin+'/company_settings/users/get',
             columns: [
@@ -210,8 +210,11 @@
         $('.navbar-body').on('click', '.form-control', function(){
             $('#add-options').empty();
         });
-         $('.navbar-body').on('click', '.form-control', function(){
+        $('.navbar-body').on('click', '.form-control', function(){
             $('#edit-options').empty();
         });
+
+        $('#switch-state').bootstrapSwitch();
+        init_table_option(table, $(this).closest('side-body'));
     });
 </script>
